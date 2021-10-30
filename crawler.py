@@ -22,4 +22,12 @@ def getFeedsFromUrl(url):
         if href != '':
             feeds.append(tag.attrs['href'])
 
+    # get the links to the feed lists on the page
+    lists = []
+    for tag in soup.select('.et_pb_extra_column_sidebar a'):
+
+        # href only contains the path, construct complete url
+        listUrl = 'https://blog.feedspot.com' + tag.attrs['href']
+        lists.append(listUrl)
+
 getFeedsFromUrl('https://blog.feedspot.com/montreal_rss_feeds/')

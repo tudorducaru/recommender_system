@@ -1,12 +1,24 @@
 import requests
 import sqlite3
 from bs4 import BeautifulSoup
+import feedparser
 
 # list of all feeds
 feeds = []
 
 unvisitedListUrls = []
 visitedListUrls = []
+
+# checks feed validity by trying to parse the url
+def checkFeedValidity(url):
+    try:
+        print('Checking validity of ', url)
+        feedparser.parse(url)
+        print('Valid feed')
+        return True
+    except:
+        print('Invalid feed')
+        return False
 
 # retrieves all rss feed links from the given url
 # and adds them to the global variable
@@ -95,5 +107,5 @@ def saveFeeds():
     conn.close()  
 
 resetDatabase()
-crawl('https://blog.feedspot.com/uk_rss_feeds/', 10000)
+crawl('https://blog.feedspot.com/uk_rss_feeds/', 20000)
 saveFeeds()

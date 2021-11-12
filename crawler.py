@@ -1,9 +1,6 @@
 import requests
 import sqlite3
 from bs4 import BeautifulSoup
-import feedparser
-
-# TODO: save everything on program interrupt
 
 # first list url to be scraped if there is not data in db
 firstListUrl = 'https://blog.feedspot.com/uk_rss_feeds/'
@@ -66,17 +63,6 @@ def loadData():
     print('\n')
 
     conn.close()
-
-# checks feed validity by trying to parse the url
-def checkFeedValidity(url):
-    try:
-        print('Checking validity of ', url)
-        feedparser.parse(url)
-        print('Valid feed')
-        return True
-    except:
-        print('Invalid feed')
-        return False
 
 # retrieves all rss feed links from the given url
 # and adds them to the global variable
@@ -187,5 +173,5 @@ def saveData():
 # resetDatabase()
 
 loadData()
-crawl(100)
+crawl(20000)
 saveData()

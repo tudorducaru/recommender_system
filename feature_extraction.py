@@ -13,7 +13,6 @@ feeds = dict()
 # - remove HTML tags (using BeautifulSoup)
 # - convert to lower case
 # - remove numbers
-# - remove links
 # - remove symbols
 # - remove stop words (using NLTK)
 def normalize(text):
@@ -26,9 +25,6 @@ def normalize(text):
 
     # remove numbers
     text = re.sub(r'\d+', '', text)
-
-    # remove links
-    text = re.sub(r'http\S+', '', text)
 
     # remove symbols
     text = text.replace('\n', ' ')

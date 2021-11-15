@@ -46,11 +46,17 @@ def generateFeatures(url):
     for entry in entries:
         features = features + ' ' + entry['title'] + ' ' + entry['description']
 
+    # strip html tags from the text using BeautifulSoup
+    features = BeautifulSoup(features, 'html.parser').get_text()
+
+    # replace new line character with space
+    features = features.replace('\n', ' ')
+
     # add the features to the dict
     feeds[url] = features
-
-    # strip html tags
     
 loadFeeds()
 generateFeatures('https://www.personalfinancefreedom.com/feed/')
+
+print(feeds['https://www.personalfinancefreedom.com/feed/'])
 

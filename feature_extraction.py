@@ -1,10 +1,45 @@
 import sqlite3
 import feedparser
+import re
 from bs4 import BeautifulSoup
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 # dict of feeds
 # urls are keys and features (body of text) are values
 feeds = dict()
+
+# normalizes a string 
+# - remove HTML tags (using BeautifulSoup)
+# - convert to lower case
+# - remove numbers
+# - remove links
+# - remove symbols
+# - remove stop words (using NLTK)
+def normalize(text):
+
+    # remove HTML tags
+    text = BeautifulSoup(text, 'html.parser').get_text()
+
+    # convert to lower case
+    text = text.lower()
+
+    # remove numbers
+    text = re.sub(r'\d+', '', text)
+
+    # remove links
+    text = re.sub(r'http\S+', '', text)
+
+    # remove symbols
+    text = text.replace('\n', ' ')
+    text = re.sub(r'[^A-Za-z ]+', '', text)
+    text = re.sub(r' +', ' ', text)
+
+    # remove stop words
+    tokenized = word_tokenize(text)
+    text = ' '.join([word for word in tokenized if not word in stopwords.words('english')])
+
+    return text
 
 # load feeds from the db
 def loadFeeds():
@@ -46,17 +81,16 @@ def generateFeatures(url):
     for entry in entries:
         features = features + ' ' + entry['title'] + ' ' + entry['description']
 
-    # strip html tags from the text using BeautifulSoup
-    features = BeautifulSoup(features, 'html.parser').get_text()
-
-    # replace new line character with space
-    features = features.replace('\n', ' ')
+    # normalize the body of text
+    features = normalize(features)
 
     # add the features to the dict
     feeds[url] = features
+
+
+
     
-loadFeeds()
+# loadFeeds()
 generateFeatures('https://www.personalfinancefreedom.com/feed/')
 
 print(feeds['https://www.personalfinancefreedom.com/feed/'])
-

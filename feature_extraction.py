@@ -4,6 +4,13 @@ import re
 from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+
+count = 0
+
+# list of feed urls loaded from the db
+feed_url_list = []
 
 # dict of feeds
 # urls are keys and features (body of text) are values
@@ -40,19 +47,28 @@ def normalize(text):
 # load feeds from the db
 def loadFeeds():
 
+    print('Loading feed urls...')
+
     # connect to the db
     conn = sqlite3.connect('feeds.db')
     c = conn.cursor()
 
     # select urls 
-    # add limit 20 during development
-    c.execute('SELECT url FROM feeds LIMIT 20;')
+    # add limit 100 during development
+    c.execute('SELECT url FROM feeds LIMIT 100;')
     for entry in c.fetchall():
-        feeds[entry[0]] = ''
+        feed_url_list.append(entry[0])
 
-# analyze a feed and generate its features
+    print('Loaded feeds\n')
+
+# analyze a feed and generate its initial body of text
 def generateFeatures(url):
 
+    global count
+    count += 1
+    print('Generating features for ', url, ' ', str(count))
+
+    # print('Generating features for ', url)
     d = feedparser.parse(url)
 
     # body of text representing the features
@@ -65,8 +81,7 @@ def generateFeatures(url):
 
     if title == None or description == None or len(entries) == 0:
         
-        # feed is invalid, remove from dict
-        del feeds[url]
+        # feed is invalid
         return
 
     # feed is valid, continue feature extraction
@@ -80,13 +95,30 @@ def generateFeatures(url):
     # normalize the body of text
     features = normalize(features)
 
-    # add the features to the dict
+    # add the features to the feed's dict entry
     feeds[url] = features
 
+# returns the feeds dict's values as a doc-word matrix
+def vectorizeDocuments():
+    corpus = list(feeds.values())
+    vectorizer = CountVectorizer(max_features=20000, binary=True)
+    doc_word = vectorizer.fit_transform(corpus)
+
+    # get the words (column labels)
+    words = vectorizer.get_feature_names()
+
+    return doc_word, words
 
 
-    
-# loadFeeds()
-generateFeatures('https://www.personalfinancefreedom.com/feed/')
 
-print(feeds['https://www.personalfinancefreedom.com/feed/'])
+loadFeeds()
+
+# generate features for all feeds
+for url in feed_url_list:
+    generateFeatures(url)
+
+doc_word, words = vectorizeDocuments()
+print('\n')
+print(doc_word.shape)
+print(len(words))
+

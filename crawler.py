@@ -90,7 +90,10 @@ def scrapeUrl(url):
             
             # if the list has not been visited before,
             # add it to the unvisited lists
-            if listUrl not in visitedListUrls and listUrl not in unvisitedListUrls:
+            
+            # there may be lists of other content types (blog, website etc.) 
+            # only add rss feed lists
+            if listUrl not in visitedListUrls and listUrl not in unvisitedListUrls and 'rss_feeds' in listUrl:
                 unvisitedListUrls.append(listUrl)
     except:
         print('Could not scrape url: ' + url)
@@ -173,5 +176,5 @@ def saveData():
 # resetDatabase()
 
 loadData()
-crawl(20000)
+crawl(10000)
 saveData()

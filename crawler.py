@@ -14,7 +14,6 @@ visitedListUrls = []
 # initial lengths of lists to make sure
 # only new data is added to the db
 initialNoFeeds = 0
-initialNoUnvisitedLists = 0
 initialNoVisitedLists = 0
 
 # number n of visited lists
@@ -27,7 +26,7 @@ def loadData():
     print('Loading data from db...')
 
     # connect to the database
-    conn = sqlite3.connect('feeds.db')
+    conn = sqlite3.connect('feeds_test.db')
     c = conn.cursor()
 
     # load feeds
@@ -123,7 +122,7 @@ def crawl(maxNoOfFeeds):
 def resetDatabase():
     
     # connect to the database
-    conn = sqlite3.connect('feeds.db')
+    conn = sqlite3.connect('feeds_test.db')
     c = conn.cursor()
 
     # drop the tables
@@ -146,7 +145,7 @@ def saveData():
     print('Saving feeds...')
 
     # connect to the database
-    conn = sqlite3.connect('feeds.db')
+    conn = sqlite3.connect('feeds_test.db')
     c = conn.cursor()
 
     # save feeds
@@ -155,13 +154,11 @@ def saveData():
         c.execute('INSERT INTO feeds (url) VALUES (?);', (feed,))
         counter += 1
 
-    # delete unvisited lists that were visited in this run
-    c.execute('DELETE FROM unvisited_lists WHERE _id IN (SELECT _id FROM unvisited_lists LIMIT ?);', (visitedLists, ))
-
-    # save unvisited lists
-    for l in unvisitedListUrls[initialNoUnvisitedLists:]:
+    # update the unvisited lists in the database
+    c.execute('DELETE FROM unvisited_lists;')
+    for l in unvisitedListUrls:
         c.execute('INSERT INTO unvisited_lists (url) VALUES (?);', (l,))
-
+ 
     # save visited lists
     for l in visitedListUrls[initialNoVisitedLists:]:
         c.execute('INSERT INTO visited_lists (url) VALUES (?);', (l, ))
@@ -173,7 +170,7 @@ def saveData():
     conn.close()  
 
 
-# resetDatabase()
+resetDatabase()
 
 loadData()
 crawl(10000)

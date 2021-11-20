@@ -50,12 +50,12 @@ def loadFeeds():
     print('Loading feed urls...')
 
     # connect to the db
-    conn = sqlite3.connect('feeds.db')
+    conn = sqlite3.connect('feeds_dev.db')
     c = conn.cursor()
 
     # select urls 
     # add limit 100 during development
-    c.execute('SELECT url FROM feeds LIMIT 100;')
+    c.execute('SELECT url FROM feeds LIMIT 5;')
     for entry in c.fetchall():
         feed_url_list.append(entry[0])
 
@@ -108,7 +108,6 @@ def vectorizeDocuments():
     words = vectorizer.get_feature_names()
 
     return doc_word, words
-
 
 
 loadFeeds()

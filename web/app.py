@@ -24,7 +24,7 @@ def register():
     words = request.json.get('words', [])
 
     # Check if all data has been sent
-    if not email or not password or not type(words) == list or len(words) == 0:
+    if not email or not password or not type(words) == list:
         return 'Please send all required information for registration!', 400
 
     # Password must have at least 6 characters
@@ -115,3 +115,25 @@ def logout():
     response = jsonify({})
     unset_access_cookies(response)
     return response
+
+@app.route('/getWords')
+def getWords():
+
+    # Retrieve all words from the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    c.execute('SELECT word FROM words')
+
+    # Construct list of words
+    words = []
+    for row in c.fetchall():
+        words.append(row[0])
+    
+    # Close db connection
+    conn.close()
+
+    # Send the words to the client
+    return {
+        'words': words
+    }

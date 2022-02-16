@@ -71,3 +71,42 @@ def register():
     except Exception as e:
         print(e)
         return 'Error inserting user in the database', 500
+
+# Login route
+@app.route('/login', methods=['POST'])
+def login():
+
+    # Get the data from the request body
+    email = request.json.get('email', '')
+    password = request.json.get('password', '')
+
+    # Check if all data has been sent
+    if not email or not password:
+        return 'Please send all required information for registration!', 400
+
+    # Retrieve the user record
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    c.execute('SELECT * FROM users WHERE email = ?', (email,))
+    rows = c.fetchall()
+    if len(rows) == 0:
+        
+        return 'User does not exist', 400
+
+    else:
+
+        # Check password
+        user_record = rows[0]
+        if check_password_hash(user_record[2], password):
+
+            # Generate JWT
+            jwt_token = create_access_token(identity=user_record[0])
+            
+            # Set the JWT in a cookie
+            resp = jsonify({})
+            set_access_cookies(resp, jwt_token)
+            return resp
+
+        else:
+            return 'Incorrect password', 400

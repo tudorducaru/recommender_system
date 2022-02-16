@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import WordSelection from '../../../components/wordSelection/wordSelection';
+import AuthService from '../../../services/authService';
+import { AuthContext } from '../../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
-import WordSelection from '../../../components/wordSelection/wordSelection';
 
 const UserInfoForm = props => {
 
@@ -89,15 +92,21 @@ const UserInfoForm = props => {
 
 const RegistrationForm = () => {
 
+    const [serverError, setServerError] = useState();
+    const [isSubmitting, setIsSubmitting] = useState();
+
+    // Access authentication context
+    const authContext = useContext(AuthContext);
+
+    // Access navigation
+    const navigate = useNavigate();
+
     // User info
     const [userInfo, setUserInfo] = useState({
         'email': '',
         'password': '',
         'words': []
     });
-
-    // Keep track of errors
-    const [serverError, setServerError] = useState();
 
     // Whether to show word selection component or not
     const [showWordSelection, setShowWordSelection] = useState(false);
@@ -109,6 +118,8 @@ const RegistrationForm = () => {
 
             return prevUserInfo;
         });
+
+        setServerError();
         setShowWordSelection(true);
     }
 
@@ -141,18 +152,47 @@ const RegistrationForm = () => {
     }
 
     const handleSubmit = () => {
-        console.log(userInfo);
+
+        // Show spinner 
+        setIsSubmitting(true);
+
+        AuthService.register(userInfo)
+            .then(() => {
+
+                // Store that the user is logged in
+                authContext.loginUser();
+
+                // Navigate to homepage
+                navigate('/', { replace: true });
+
+            })
+            .catch(errorMessage => {
+
+                // Go back to user info step
+                setIsSubmitting(false);
+                setShowWordSelection(false);
+
+                // Show error message
+                setServerError(errorMessage);
+            });
+
     }
 
     return (
         <div>
+
+            {serverError && <Alert variant='danger'>{serverError}</Alert>}
+
             {
                 !showWordSelection ?
                     <UserInfoForm
                         initialValues={userInfo}
                         handleSubmit={handleInfoSubmit}
                     /> :
-                    <div>
+                    <div className='registration-step-2-container'>
+
+                        {isSubmitting && <Spinner className='custom-spinner' animation='border' />}
+
                         <WordSelection
                             words={userInfo.words}
                             handleWordClick={handleWordClick}

@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './wordSelection.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import DataService from '../../services/dataService';
 
 const WordSelection = props => {
 
-    let words = ['Hatz', 'Jonule', 'Tudor', 'Boss', 'Unchiule', 'Godac', 'Manele', 'Masini', 'Bani'];
+    const [words, setWords] = useState([]);
+
+    useEffect(() => {
+
+        DataService.getWords()
+            .then((data) => setWords(data.words))
+            .catch(errorMessage => console.log(errorMessage));
+
+    }, []);
 
     return (
         <Container fluid>

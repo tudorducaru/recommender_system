@@ -17,3 +17,7 @@
 .auth-toggle {
     text-decoration: underline;
 }
+
+.registration-step-2-container {
+    position: relative;
+}

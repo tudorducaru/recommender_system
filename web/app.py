@@ -114,12 +114,20 @@ def login():
         else:
             return 'Incorrect password', 400
 
+# Logout route
 @app.route('/logout', methods=['POST'])
 @jwt_required()
 def logout():
     response = jsonify({})
     unset_access_cookies(response)
     return response
+
+# Route that verifies user
+@app.route('/verifyUser')
+@jwt_required()
+def verifyUser():
+    return jsonify({})
+
 
 @app.route('/getWords')
 def getWords():

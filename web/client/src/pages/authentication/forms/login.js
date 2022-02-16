@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Formik, Field } from 'formik';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
-
+import AuthService from '../../../services/authService';
+import { AuthContext } from '../../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
 
     // Keep track of errors
     const [serverError, setServerError] = useState();
+
+    // Access authentication context
+    const authContext = useContext(AuthContext);
+
+    // Access navigation
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -31,7 +39,20 @@ const LoginForm = () => {
                 validateOnBlur={false}
                 onSubmit={(values, { setSubmitting }) => {
 
-                    
+                    AuthService.login(values.email, values.password)
+                        .then(() => {
+
+                            // Store that the user is logged in
+                            authContext.loginUser();
+
+                            navigate('/', { replace: true });
+                        })
+                        .catch((errorMessage) => {
+
+                            // Show error message
+                            setSubmitting(false);
+                            setServerError(errorMessage);
+                        })
 
                 }}
             >

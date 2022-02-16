@@ -1,9 +1,7 @@
-from cmath import e
-from msilib.schema import Error
 from flask import Flask, request
 from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required
+from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies
 import sqlite3
 
 # Initialize Flask app
@@ -110,3 +108,10 @@ def login():
 
         else:
             return 'Incorrect password', 400
+
+@app.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    response = jsonify({})
+    unset_access_cookies(response)
+    return response

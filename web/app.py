@@ -9,13 +9,14 @@ from flask_cors import CORS
 app = Flask(__name__)
 
 # Configure CORS
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # Set up JWT
 app.config['JWT_SECRET_KEY'] = 'e3ab3f6d051deadc143e3c04a2a882e3'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_SESSION_COOKIE'] = False
+app.config['JWT_COOKIE_SECURE'] = True
 jwt = JWTManager(app)
 
 # Registration route

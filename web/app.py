@@ -3,9 +3,13 @@ from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies
 import sqlite3
+from flask_cors import CORS
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Configure CORS
+CORS(app)
 
 # Set up JWT
 app.config['JWT_SECRET_KEY'] = 'e3ab3f6d051deadc143e3c04a2a882e3'

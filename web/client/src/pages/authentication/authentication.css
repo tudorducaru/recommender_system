@@ -1,0 +1,19 @@
+.authentication-container {
+    margin: 0 auto;
+    width: 90%;
+}
+
+/* sm breakpoint */
+@media only screen and (min-width: 576px) {
+    .authentication-container {
+        width: 400px;
+    }
+}
+
+.authentication-container form {
+    position: relative;
+}
+
+.auth-toggle {
+    text-decoration: underline;
+}

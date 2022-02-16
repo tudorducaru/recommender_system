@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-spinner {
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  left: calc(50% - 16px);
+  top: calc(50% - 16px);
+}

@@ -27,7 +27,7 @@ const Explore = () => {
     const handleLoadMore = () => {
 
         // Get data for the next page
-        DataService.getFeeds(page + 1)
+        DataService.getFeeds(page + 1, searchTerm)
             .then((data) => {
 
                 // Increment the page
@@ -42,8 +42,20 @@ const Explore = () => {
 
     // Handle search form submissions
     const handleSearchSubmit = (e) => {
+
+        // Prevent reloading page
         e.preventDefault();
-        console.log(searchTerm);
+
+        // Get feeds from the database (page 0)
+        DataService.getFeeds(0, searchTerm)
+            .then((data) => {
+
+                // Set page to 0
+                setPage(0);
+
+                setFeeds(data);
+            })
+            .catch(errorMessage => console.log(errorMessage));
     };
 
     return (

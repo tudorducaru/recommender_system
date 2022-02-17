@@ -19,13 +19,16 @@ class DataService {
     }
 
     // Get all feeds for the given page
-    async getFeeds(page) {
+    async getFeeds(page, searchTerm) {
         try {
 
             const response = await axios.get(
                 `${API_URL}/getFeeds`,
                 {
-                    params: { page }
+                    params: {
+                        page,
+                        searchTerm
+                    }
                 }
             );
 

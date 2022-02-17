@@ -39,6 +39,20 @@ class DataService {
         }
     }
 
+    // Get all feeds liked by the user
+    async getLikedFeeds() {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/getLikedFeeds`
+            );
+            return response.data;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
 };
 
 export default new DataService(); 

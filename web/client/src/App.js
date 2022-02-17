@@ -11,6 +11,7 @@ import AuthService from './services/authService';
 import Settings from './pages/settings/settings';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import DataService from './services/dataService';
 
 function App() {
 
@@ -31,14 +32,28 @@ function App() {
 
         AuthService.verifyUser()
             .then(user => {
-
+                
                 // Store login information in context
-                if (user) authContext.loginUser();
+                if (user) {
+
+                    // Get the feeds liked by the user
+                    return DataService.getLikedFeeds()
+                        .then(feeds => {
+
+                            // Login user
+                            authContext.loginUser();
+
+                            // Store liked feeds in global state
+                            authContext.setLikedFeeds(feeds);
+
+                        })
+                        .catch(errorMessage => console.log(errorMessage));
+                    
+                }
                 else authContext.logoutUser();
 
-                setVerification(true);
-
-            });    
+            })
+            .then(() => setVerification(true));    
 
     }, [])
 

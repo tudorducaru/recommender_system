@@ -53,6 +53,36 @@ class DataService {
         }
     }
 
+    // Like a feed
+    async likeFeed(feed_id) {
+        try {
+
+            const response = await axios.post(
+                `${API_URL}/like`,
+                { feed_id }
+            );
+            return;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
+    // Dislike feed
+    async dislikeFeed(feed_id) {
+        try {
+
+            const response = await axios.post(
+                `${API_URL}/dislike`,
+                { feed_id }
+            );
+            return;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
 };
 
 export default new DataService(); 

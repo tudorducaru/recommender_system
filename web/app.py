@@ -180,3 +180,37 @@ def getFeeds():
         })
 
     return jsonify(feeds)
+
+
+@app.route('/searchFeeds')
+@jwt_required()
+def searchFeeds():
+
+    # Get the search term
+    searchTerm = request.args.get('searchTerm', '')
+
+    # Get the page number 
+    pageNumber = int(request.args.get('page', 0))
+
+    # Set the number of feeds per page
+    limit = 10
+
+    # Search for feeds containing the search term
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    searchTerm = "%" + searchTerm + "%"
+    print(searchTerm)
+    c.execute("SELECT _id, url, title, description FROM feeds WHERE title LIKE ? OR description LIKE ? LIMIT ? OFFSET ?", (searchTerm, searchTerm, limit, pageNumber * limit))
+
+    # Convert the list of tuples to a list of dicts
+    feeds = []
+    for row in c.fetchall():
+        feeds.append({
+            'id': row[0],
+            'url': row[1],
+            'title': row[2],
+            'description': row[3]
+        })
+
+    return jsonify(feeds)

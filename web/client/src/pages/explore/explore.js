@@ -11,6 +11,9 @@ const Explore = () => {
     // Keep track of the current page
     const [page, setPage] = useState(0);
 
+    // Keep track of the search term
+    const [searchTerm, setSearchTerm] = useState();
+
     // Load feeds from the database when the page loads
     useEffect(() => {
 
@@ -19,8 +22,6 @@ const Explore = () => {
             .catch(errorMessage => console.log(errorMessage));
 
     }, []);
-
-    console.log(feeds);
 
     // Handle clicks on the load more button
     const handleLoadMore = () => {
@@ -39,12 +40,29 @@ const Explore = () => {
 
     };
 
+    // Handle search form submissions
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        console.log(searchTerm);
+    };
+
     return (
-        <div style={{margin: '0 auto', width: '600px'}}>
-            <button onClick={handleLoadMore}>Load More</button>
+        <div style={{ margin: '0 auto', width: '600px' }}>
+
+            <form onSubmit={handleSearchSubmit}>
+                <input
+                    type='text'
+                    className='form-control mb-5 mt-5'
+                    placeholder='Search feeds...'
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </form>
+
             {
                 feeds.map((feed) => <FeedCard feed={feed} />)
             }
+
+            <button onClick={handleLoadMore}>Load More</button>
         </div>
     )
 }

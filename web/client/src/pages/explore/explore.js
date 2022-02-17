@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import './explore.css';
 import DataService from '../../services/dataService';
 
@@ -7,20 +7,41 @@ const Explore = () => {
     // Keep the feeds in local state
     const [feeds, setFeeds] = useState([]);
 
+    // Keep track of the current page
+    const [page, setPage] = useState(0);
+
     // Load feeds from the database when the page loads
     useEffect(() => {
 
-        DataService.getFeeds(0)
+        DataService.getFeeds(page)
             .then((data) => setFeeds(data))
             .catch(errorMessage => console.log(errorMessage));
 
     }, []);
 
+    console.log(feeds);
+
+    // Handle clicks on the load more button
+    const handleLoadMore = () => {
+
+        // Get data for the next page
+        DataService.getFeeds(page + 1)
+            .then((data) => {
+
+                // Increment the page
+                setPage(prevPage => prevPage + 1);
+
+                // Append the feeds to the local state
+                setFeeds([...feeds, ...data]);
+            })
+            .catch(errorMessage => console.log(errorMessage));
+
+    };
 
     return (
         <div>
-            <h1>Explore</h1>
-            { feeds.map((feed) => <p key={feed.id}>{feed.id}</p>) }
+            <button onClick={handleLoadMore}>Load More</button>
+            {feeds.map((feed) => <p key={feed.id}>{feed.id}</p>)}
         </div>
     )
 }

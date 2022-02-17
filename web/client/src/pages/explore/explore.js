@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './explore.css';
 import DataService from '../../services/dataService';
+import FeedCard from '../../components/feedCard/feedCard';
 
 const Explore = () => {
 
@@ -39,9 +40,11 @@ const Explore = () => {
     };
 
     return (
-        <div>
+        <div style={{margin: '0 auto', width: '600px'}}>
             <button onClick={handleLoadMore}>Load More</button>
-            {feeds.map((feed) => <p key={feed.id}>{feed.id}</p>)}
+            {
+                feeds.map((feed) => <FeedCard feed={feed} />)
+            }
         </div>
     )
 }

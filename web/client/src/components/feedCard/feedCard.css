@@ -1,0 +1,14 @@
+.feed-card {
+    width: 600px;
+    background: #e3e3e3;
+    border-radius: 8px;
+}
+
+.feed-card p {
+    font-size: 14px;
+}
+
+.feed-card-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}

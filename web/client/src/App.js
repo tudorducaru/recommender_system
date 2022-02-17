@@ -12,6 +12,7 @@ import Settings from './pages/settings/settings';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import DataService from './services/dataService';
+import LikedFeeds from './pages/likedFeeds/likedFeeds';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
             <Route path='/' element={<RequireAuth><Homepage /></RequireAuth>} />
             <Route path='/explore' element={<RequireAuth><Explore /></RequireAuth>} />
             <Route path='/settings' element={<RequireAuth><Settings /></RequireAuth>} />
+            <Route path='/likedFeeds' element={<RequireAuth><LikedFeeds /></RequireAuth>} />
         </Routes>
     );
 }

@@ -256,3 +256,43 @@ def dislike():
 
     except:
         return 'Could not dislike feed', 500
+
+
+# Get user's liked feeds
+@app.route('/getLikedFeeds')
+@jwt_required()
+def getLikedFeeds():
+
+    # Get user id from JWT
+    user_id = get_jwt_identity()
+
+    # Try to get the feeds liked by the user
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    try:
+
+        c.execute('''
+            SELECT feeds._id, feeds.url, feeds.title, feeds.description
+                FROM users_feeds JOIN feeds on users_feeds.feed_id = feeds._id
+                WHERE users_feeds.user_id = ?
+        ''', (user_id, ))
+
+        # Send back the feeds as a list of dicts
+        feeds = []
+        for feed in c.fetchall():
+            feeds.append({
+                '_id': feed[0],
+                'url': feed[1],
+                'title': feed[2],
+                'description': feed[3]
+            })
+
+        # Close database connection
+        conn.close()
+
+        # Send response
+        return jsonify(feeds)
+
+    except:
+        return 'Could not retrieve liked feeds', 500

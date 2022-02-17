@@ -128,7 +128,7 @@ def logout():
 def verifyUser():
     return jsonify({})
 
-
+# Get words route
 @app.route('/getWords')
 def getWords():
 
@@ -150,3 +150,33 @@ def getWords():
     return {
         'words': words
     }
+
+
+# Get feeds route
+@app.route('/getFeeds')
+@jwt_required()
+def getFeeds():
+
+    # Get the page number 
+    pageNumber = int(request.args.get('page', 0))
+
+    # Set the number of feeds per page
+    limit = 10
+
+    # Retrieve feeds for the corresponding page from the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    c.execute('SELECT _id, url, title, description FROM feeds WHERE title IS NOT NULL and description IS NOT NULL LIMIT ? OFFSET ?', (limit, pageNumber * limit))
+    
+    # Convert the list of tuples to a list of dicts
+    feeds = []
+    for row in c.fetchall():
+        feeds.append({
+            'id': row[0],
+            'url': row[1],
+            'title': row[2],
+            'description': row[3]
+        })
+
+    return jsonify(feeds)

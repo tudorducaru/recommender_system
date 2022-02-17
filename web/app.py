@@ -199,13 +199,15 @@ def like():
     if feed_id == None:
         return 'Please provide a feed id', 400
 
-    
-
     # Try to record the like in the database
     conn = sqlite3.connect('../ml/feeds.db')
     c = conn.cursor()
 
     try:
+
+        # Enable foreign key constraint
+        # Ensures that user/feed exists in the respective table
+        c.execute('PRAGMA foreign_keys = ON')
 
         c.execute('INSERT INTO users_feeds VALUES(?, ?)', (user_id, feed_id))
         conn.commit()
@@ -218,3 +220,39 @@ def like():
 
     except:
         return 'Could not like feed', 500
+
+
+# Dislike feed route
+@app.route('/dislike', methods=['POST'])
+@jwt_required()
+def dislike():
+
+    # Get user id from JWT
+    user_id = get_jwt_identity()
+
+    # Get the feed id from the request body
+    feed_id = request.json.get('feed_id')
+    if feed_id == None:
+        return 'Please provide a feed id', 400
+
+    # Try to record the like in the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    try:
+
+        # Enable foreign key constraint
+        # Ensures that user/feed exists in the respective table
+        c.execute('PRAGMA foreign_keys = ON')
+
+        c.execute('DELETE FROM users_feeds WHERE user_id = ? AND feed_id = ?', (user_id, feed_id))
+        conn.commit()
+
+        # Close the connection
+        conn.close()
+
+        # Send response to client
+        return 'Feed disliked'
+
+    except:
+        return 'Could not dislike feed', 500

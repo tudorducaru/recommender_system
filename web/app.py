@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies
+from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies, get_jwt_identity
 import sqlite3
 from flask_cors import CORS
 
@@ -184,3 +184,37 @@ def getFeeds():
         })
 
     return jsonify(feeds)
+
+
+# Like feed route
+@app.route('/like', methods=['POST'])
+@jwt_required()
+def like():
+
+    # Get user id from JWT
+    user_id = get_jwt_identity()
+
+    # Get the feed id from the request body
+    feed_id = request.json.get('feed_id')
+    if feed_id == None:
+        return 'Please provide a feed id', 400
+
+    
+
+    # Try to record the like in the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    try:
+
+        c.execute('INSERT INTO users_feeds VALUES(?, ?)', (user_id, feed_id))
+        conn.commit()
+
+        # Close the connection
+        conn.close()
+
+        # Send response to client
+        return 'Feed liked'
+
+    except:
+        return 'Could not like feed', 500

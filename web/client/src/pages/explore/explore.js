@@ -71,7 +71,7 @@ const Explore = () => {
             </form>
 
             {
-                feeds.map((feed) => <FeedCard feed={feed} />)
+                feeds.map((feed) => <FeedCard feed={feed} selected={true} />)
             }
 
             <button onClick={handleLoadMore}>Load More</button>

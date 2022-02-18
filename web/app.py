@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies, get_jwt_identity
 import sqlite3
 from flask_cors import CORS
+import numpy as np
+from sklearn.metrics.pairwise import euclidean_distances
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -282,7 +284,7 @@ def getLikedFeeds():
         feeds = []
         for feed in c.fetchall():
             feeds.append({
-                '_id': feed[0],
+                'id': feed[0],
                 'url': feed[1],
                 'title': feed[2],
                 'description': feed[3]
@@ -296,3 +298,103 @@ def getLikedFeeds():
 
     except:
         return 'Could not retrieve liked feeds', 500
+
+
+# Recommend feeds route
+@app.route('/recommend/corex')
+@jwt_required()
+def recommendCorex():
+
+    # Load topic modelling information
+    labels = np.load('../ml/anchored_labels.npy')
+    word_clusters = np.load('../ml/anchored_word_clusters.npy')
+    words = np.load('../ml/binary_words.npy')
+
+    # Load urls of feeds liked by the user
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    # Get the user id
+    user_id = get_jwt_identity()
+    
+    liked_feeds_url = []
+    try:
+
+        c.execute('''
+            SELECT feeds.url
+                FROM users_feeds JOIN feeds on users_feeds.feed_id = feeds._id
+                WHERE users_feeds.user_id = ?
+        ''', (user_id, ))
+
+        for row in c.fetchall():
+            liked_feeds_url.append(row[0])
+
+    except:
+        return 'Could not retrieve liked feeds', 500
+
+    print(liked_feeds_url)
+
+    # Get all feed urls from the database
+    feeds = []
+    try: 
+
+        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL')
+        for row in c.fetchall():
+            feeds.append({
+                'id': row[0],
+                'url': row[1],
+                'title': row[2],
+                'description': row[3]
+            })
+
+    except Exception as e:
+        print(e)
+        return 'Could not retrieve feeds', 500
+    
+    # Get all words selected by the user
+    user_words = []
+    try:
+
+        c.execute('''
+            SELECT words.word 
+                FROM users_words JOIN words ON users_words.word_id = words.id
+                WHERE users_words.user_id = ?
+        ''', (user_id, ))
+
+        for row in c.fetchall():
+            user_words.append(row[0])
+
+    except:
+        return 'Could not retrieve user words', 500
+
+    # Close db connection
+    conn.close()
+    
+    # Construct user profile in the feature space
+    user_profile = np.zeros(20)
+
+    # Average feature vectors of liked feeds
+    for feed_url in liked_feeds_url:
+        feed_index = next((i for (i, element) in enumerate(feeds) if element['url'] == feed_url), 0)
+        user_profile += labels[feed_index]
+
+    # Get the topic associated with each of the words
+    for word in user_words:
+        
+        # Get the index of the word in the vocabulary
+        word_index = list(words).index(word)
+
+        # Use the topic associated with the word
+        user_profile += word_clusters[word_index]
+
+    user_profile /= (len(liked_feeds_url) + len(user_words))
+
+    # Calculate the distance between user profile and each feed
+    distances_matrix = euclidean_distances([user_profile], labels)
+
+    # Get first 10 closest feeds
+    closest_feeds_index = np.argsort(distances_matrix[0])[:10]
+    recommended_feeds = [feeds[i] for i in closest_feeds_index]
+
+    return jsonify(recommended_feeds)
+        

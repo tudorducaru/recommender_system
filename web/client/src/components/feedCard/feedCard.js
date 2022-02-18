@@ -51,6 +51,7 @@ const FeedCard = props => {
                     <p className='feed-card-description mb-0'>
                         {feed.description}
                     </p>
+                    <p>{feed.url}</p>
                 </Col>
                 <Col className='col-auto d-flex align-items-center'>
 

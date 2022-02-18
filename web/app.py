@@ -6,6 +6,7 @@ import sqlite3
 from flask_cors import CORS
 import numpy as np
 from sklearn.metrics.pairwise import euclidean_distances
+import scipy
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -300,7 +301,7 @@ def getLikedFeeds():
         return 'Could not retrieve liked feeds', 500
 
 
-# Recommend feeds route
+# Recommend feeds based on corex route
 @app.route('/recommend/corex')
 @jwt_required()
 def recommendCorex():
@@ -331,8 +332,6 @@ def recommendCorex():
 
     except:
         return 'Could not retrieve liked feeds', 500
-
-    print(liked_feeds_url)
 
     # Get all feed urls from the database
     feeds = []
@@ -392,9 +391,83 @@ def recommendCorex():
     # Calculate the distance between user profile and each feed
     distances_matrix = euclidean_distances([user_profile], labels)
 
-    # Get first 10 closest feeds
-    closest_feeds_index = np.argsort(distances_matrix[0])[:10]
+    # Get first 25 closest feeds
+    closest_feeds_index = np.argsort(distances_matrix[0])[:25]
     recommended_feeds = [feeds[i] for i in closest_feeds_index]
 
     return jsonify(recommended_feeds)
+
+
+# Recommend feeds based on tf-idf route
+@app.route('/recommend/tfidf')
+@jwt_required()
+def recommendTFIDF():
+
+    # Load the doc-word matrix with tf-idf values
+    doc_word_tfidf = scipy.sparse.load_npz('../ml/tfidf_matrix.npz')
+
+    # Load urls of feeds liked by the user
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    # Get the user id
+    user_id = get_jwt_identity()
+    
+    liked_feeds_url = []
+    try:
+
+        c.execute('''
+            SELECT feeds.url
+                FROM users_feeds JOIN feeds on users_feeds.feed_id = feeds._id
+                WHERE users_feeds.user_id = ?
+        ''', (user_id, ))
+
+        for row in c.fetchall():
+            liked_feeds_url.append(row[0])
+
+    except:
+        return 'Could not retrieve liked feeds', 500
+
+    # Get all feed urls from the database
+    feeds = []
+    try: 
+
+        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL')
+        for row in c.fetchall():
+            feeds.append({
+                'id': row[0],
+                'url': row[1],
+                'title': row[2],
+                'description': row[3]
+            })
+
+    except Exception as e:
+        print(e)
+        return 'Could not retrieve feeds', 500
+
+    # Close db connection
+    conn.close()
+
+    # Construct user profile in the TF-IDF feature space
+    user_profile = np.zeros((20000,))
+
+    # Average the feature vectors of the feeds
+    for feed_url in liked_feeds_url:
+        feed_index = next((i for (i, element) in enumerate(feeds) if element['url'] == feed_url), 0)
+        user_profile += np.array(doc_word_tfidf[feed_index].todense()).ravel()
+
+    user_profile /= len(liked_feeds_url)
+
+    # Calculate the distance between user profile and each feed
+    distances_matrix = euclidean_distances([user_profile], doc_word_tfidf)
+
+    # Get first 25 closest feeds
+    closest_feeds_index = np.argsort(distances_matrix[0])[:100]
+    np.random.shuffle(closest_feeds_index)
+    recommended_feeds = [feeds[i] for i in closest_feeds_index[:25]]
+
+    return jsonify(recommended_feeds)
+
+
+
         

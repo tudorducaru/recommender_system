@@ -83,6 +83,34 @@ class DataService {
         }
     }
 
+    // Get feeds recommended based on corex
+    async getRecommendedFeedsCorex() {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/recommend/corex`
+            );
+            return response.data;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
+    // Get feeds recommended based on tfidf
+    async getRecommendedFeedsTfIdf() {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/recommend/tfidf`
+            );
+            return response.data;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
 };
 
 export default new DataService(); 

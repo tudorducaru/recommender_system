@@ -1,0 +1,44 @@
+.sidebar-hamburger-icon {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.sidebar-container {
+    position: fixed;
+    top: 0;
+}
+
+.sidebar-container.show {
+    position: sticky;
+    top: 0;
+}
+
+.main-content {
+    transition: all 1s;
+    width: 100%;
+    margin: 0;
+}
+
+.sidebar {
+    position: fixed;
+    left: -240px;    
+    height: 100vh;
+    width: 240px !important;
+    background-color: #ffcb3d;
+    transition: all 1s;
+}
+
+.sidebar-container.show .sidebar {
+    left: 0;
+}
+
+.sidebar-hamburger-icon {
+    position: absolute;
+}
+
+@media only screen and (min-width: 992px) {
+    .sidebar-container.show + .main-content {
+        margin-left: 240px;
+    }
+}

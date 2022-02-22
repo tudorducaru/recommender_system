@@ -1,0 +1,20 @@
+.settings-container {
+    width: 90%;
+    max-width: 500px;
+}
+
+.settings-container .word {
+    background-color: white;
+}
+
+.settings-container .custom-btn {
+    width: 200px;
+}
+
+#logout-btn {
+    background-color: #eb4034 !important;
+}
+
+#logout-btn:hover {
+    background-color: #c2352b !important;
+}

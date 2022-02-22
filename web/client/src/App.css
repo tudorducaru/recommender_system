@@ -53,6 +53,7 @@ body {
 
 .custom-btn {
   background-color: #FB8500 !important;
+  height: 40px;
   border: none !important;
   border-radius: 100px !important;
 }

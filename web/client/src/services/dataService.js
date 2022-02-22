@@ -111,6 +111,34 @@ class DataService {
         }
     }
 
+    // Get user's words
+    async getUserWords() {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/getUserWords`
+            );
+            return response.data;
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
+    // Update user's words
+    async updateUserWords(words) {
+        try {
+
+            const response = await axios.post(
+                `${API_URL}/updateWords`,
+                { words }
+            )
+
+        } catch (err) {
+            return err.response.data;
+        }
+    }
+
 };
 
 export default new DataService(); 

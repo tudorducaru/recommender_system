@@ -13,8 +13,7 @@ const Sidebar = () => {
     const location = window.location.pathname;
 
     // Whether or not to show the sidebar
-    const [show, setShow] = useState(false);
-    console.log(show);
+    const [show, setShow] = useState(true);
 
     return (
         <div className={'sidebar-container ' + (show ? 'show' : '')}>

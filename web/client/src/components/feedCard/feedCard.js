@@ -22,7 +22,8 @@ const FeedCard = props => {
     }
 
     // Handle liking a feed
-    const handleLike = () => {
+    const handleLike = (e) => {
+        e.stopPropagation();
 
         addLikedFeed(feed);
 
@@ -32,8 +33,9 @@ const FeedCard = props => {
     }
 
     // Handle disliking a feed
-    const handleDislike = () => {
-        
+    const handleDislike = (e) => {
+        e.stopPropagation();
+
         removeLikedFeed(feed.id);
 
         DataService.dislikeFeed(feed.id)
@@ -42,7 +44,7 @@ const FeedCard = props => {
     }
 
     return (
-        <Container className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
+        <Container onClick={() => window.open(feed.url)} className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
             <Row>
                 <Col>
                     <p className='feed-card-title'>

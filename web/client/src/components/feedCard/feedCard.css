@@ -2,7 +2,8 @@
     width: 100%;
     background: white;
     border-radius: 8px;
-    box-shadow: 0px 0px 16px 3px #B2B2B2;    ;
+    box-shadow: 0px 0px 16px 3px #B2B2B2;
+    cursor: pointer;
 }
 
 .feed-card p {

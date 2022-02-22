@@ -469,5 +469,36 @@ def recommendTFIDF():
     return jsonify(recommended_feeds)
 
 
+# Get the words selected by the user
+@app.route('/getUserWords')
+@jwt_required()
+def getUserWords():
 
-        
+    # Get the user id
+    user_id = get_jwt_identity()
+
+    # Connect to the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    # Get all words selected by the user
+    user_words = []
+    try:
+
+        c.execute('''
+            SELECT words.word 
+                FROM users_words JOIN words ON users_words.word_id = words.id
+                WHERE users_words.user_id = ?
+        ''', (user_id, ))
+
+        for row in c.fetchall():
+            user_words.append(row[0])
+
+    except:
+        return 'Could not retrieve user words', 500
+
+    # Close database connection
+    conn.close()
+
+    # Send words to client
+    return jsonify(user_words)

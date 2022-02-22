@@ -502,3 +502,38 @@ def getUserWords():
 
     # Send words to client
     return jsonify(user_words)
+
+
+# Update user's words in the database
+@app.route('/updateWords', methods=['POST'])
+@jwt_required()
+def updateWords():
+
+    # Get the user's id
+    user_id = get_jwt_identity()
+
+    # Get the words from the request body
+    words = request.json.get('words', [])
+
+    # Connect to the db
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    # Delete user's current words from the db
+    try:
+
+        c.execute('DELETE FROM users_words WHERE user_id = ?', (user_id,))
+
+        # Add the user's interests (words)
+        # Get the id corresponding with the words selected by the user
+        c.execute('SELECT id FROM words WHERE word IN (' + ','.join(['?']*len(words)) + ')', words)
+        for row in c.fetchall():
+            c.execute('INSERT INTO users_words VALUES (?, ?)', (user_id, row[0]))
+
+        conn.commit()
+
+        return jsonify()
+
+    except Exception as e:
+        print(e)
+        return 'Could not update words', 500

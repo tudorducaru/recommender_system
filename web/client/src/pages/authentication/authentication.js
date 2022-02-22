@@ -9,14 +9,14 @@ const Authentication = () => {
     const [showLogin, setShowLogin] = useState(true);
 
     return (
-        <div className='authentication-container'>
-            <h1>Authenticate</h1>
+        <div className='authentication-container mt-3'>
+            <h1 className='mb-5'>Authenticate</h1>
             
             {
                 showLogin ? <LoginForm /> : <RegistrationForm />
             }
 
-            <p className='auth-toggle' onClick={() => setShowLogin(!showLogin)}>{ showLogin ? 'Do not have an account? Register!' : 'Log in' }</p>
+            <p className='auth-toggle mt-3' onClick={() => setShowLogin(!showLogin)}>{ showLogin ? 'Do not have an account? Register!' : 'Log in' }</p>
 
         </div>
     )

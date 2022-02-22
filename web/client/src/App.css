@@ -43,4 +43,14 @@
   position: absolute;
   left: calc(50% - 16px);
   top: calc(50% - 16px);
+  color: #FB8500;
+}
+
+.custom-btn {
+  background-color: #FB8500 !important;
+  border: none !important;
+}
+
+.custom-btn:focus {
+  box-shadow: none !important;
 }

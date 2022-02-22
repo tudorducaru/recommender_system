@@ -3,6 +3,29 @@
     width: 90%;
 }
 
+body {
+    background-color: #023047 !important;
+}
+
+.login-form {
+    background-color: white;
+    border-radius: 24px;
+}
+
+.authentication-container .form-group {
+    width: 100%;
+}
+
+.authentication-container button {
+    width: 100%;
+    border-radius: 100px;
+}
+
+.authentication-container h1 {
+    text-align: center;
+    color: white;
+}
+
 /* sm breakpoint */
 @media only screen and (min-width: 576px) {
     .authentication-container {
@@ -15,9 +38,29 @@
 }
 
 .auth-toggle {
+    cursor: pointer;
+    color: white;
+    text-align: center;
     text-decoration: underline;
 }
 
 .registration-step-2-container {
     position: relative;
+}
+
+.authentication-container .form-label {
+    font-weight: bold;
+}
+
+.authentication-container .form-control {
+    border-radius: 100px;
+}
+
+.authentication-container .form-control:focus {
+    border-color: #FB8500;
+    box-shadow: 0 0 0 0.1rem rgb(251 133 0 / 50%);
+}
+
+.authentication-container .alert {
+    width: 100%;
 }

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 const Sidebar = () => {
 
     // Whether or not to show the sidebar
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     console.log(show);
 
     return (

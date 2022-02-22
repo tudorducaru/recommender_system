@@ -61,36 +61,38 @@ const LoginForm = () => {
                     handleSubmit,
                     errors
                 }) => (
-                    <Form onSubmit={handleSubmit}>
+                    <Form className='login-form p-3 d-flex flex-column align-items-center' onSubmit={handleSubmit}>
 
                         {serverError && <Alert variant='danger'>{serverError}</Alert>}
 
                         {isSubmitting && <Spinner className='custom-spinner' animation='border' />}
 
-                        <Form.Group className='form-group'>
+                        <Form.Group className='form-group mb-3'>
                             <Form.Label>Email</Form.Label>
                             <Field
                                 type='text'
                                 name='email'
                                 isInvalid={!!errors.email}
+                                placeholder='Please insert your email...'
                                 as={Form.Control}
                             />
                             <Form.Control.Feedback type='invalid'>
                                 {errors.email}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className='form-group'>
+                        <Form.Group className='form-group mb-2'>
                             <Form.Label>Password</Form.Label>
                             <Field
                                 type='password'
                                 name='password'
                                 isInvalid={!!errors.password}
+                                placeholder='Please insert a password'
                                 as={Form.Control} />
                             <Form.Control.Feedback type='invalid'>
                                 {errors.password}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='custom-button' variant="primary" type="submit" disabled={isSubmitting}>
+                        <Button className='custom-btn mt-5' variant="primary" type="submit" disabled={isSubmitting}>
                             Log In
                         </Button>
                     </Form>

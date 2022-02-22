@@ -1,0 +1,9 @@
+.search-input {
+    height: 48px;
+    border-radius: 100px !important;
+}
+
+.search-input:focus {
+    border-color: #FB8500 !important;
+    box-shadow: 0 0 0 0.1rem rgb(251 133 0 / 50%) !important;
+}

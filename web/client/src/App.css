@@ -74,3 +74,9 @@ body {
     width: 600px;
   }
 }
+
+.load-more-btn {
+  width: 200px;
+  margin-top: 16px;
+  margin-bottom: 64px;
+}

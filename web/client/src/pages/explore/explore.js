@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './explore.css';
 import DataService from '../../services/dataService';
 import FeedCard from '../../components/feedCard/feedCard';
+import Button from 'react-bootstrap/Button';;
 
 const Explore = () => {
 
@@ -61,10 +62,12 @@ const Explore = () => {
     return (
         <div className='feeds-container'>
 
+            <h1>Explore Feeds</h1>
+
             <form onSubmit={handleSearchSubmit}>
                 <input
                     type='text'
-                    className='form-control mb-5 mt-5'
+                    className='form-control search-input mb-4 mt-4'
                     placeholder='Search feeds...'
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -74,7 +77,10 @@ const Explore = () => {
                 feeds.map((feed) => <FeedCard feed={feed} key={feed.id} />)
             }
 
-            <button onClick={handleLoadMore}>Load More</button>
+            <div className='d-flex justify-content-center'>
+                <Button className='custom-btn load-more-btn' onClick={handleLoadMore}>Load More</Button>
+            </div>
+
         </div>
     )
 }

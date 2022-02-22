@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './explore.css';
 import DataService from '../../services/dataService';
 import FeedCard from '../../components/feedCard/feedCard';
-import Button from 'react-bootstrap/Button';;
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Explore = () => {
+
+    const [loading, setLoading] = useState(true);
 
     // Keep the feeds in local state
     const [feeds, setFeeds] = useState([]);
@@ -18,9 +21,12 @@ const Explore = () => {
     // Load feeds from the database when the page loads
     useEffect(() => {
 
+        setLoading(true);
+
         DataService.getFeeds(page)
             .then((data) => setFeeds(data))
-            .catch(errorMessage => console.log(errorMessage));
+            .catch(errorMessage => console.log(errorMessage))
+            .finally(() => setLoading(false));
 
     }, []);
 
@@ -62,6 +68,8 @@ const Explore = () => {
     return (
         <div className='feeds-container'>
 
+            {loading && <Spinner className='custom-spinner' animation='border' />}
+
             <h1>Explore Feeds</h1>
 
             <form onSubmit={handleSearchSubmit}>
@@ -77,9 +85,13 @@ const Explore = () => {
                 feeds.map((feed) => <FeedCard feed={feed} key={feed.id} />)
             }
 
-            <div className='d-flex justify-content-center'>
-                <Button className='custom-btn load-more-btn' onClick={handleLoadMore}>Load More</Button>
-            </div>
+            {
+                !loading ?
+                    <div className='d-flex justify-content-center'>
+                        <Button className='custom-btn load-more-btn' onClick={handleLoadMore}>Load More</Button>
+                    </div> : <div></div>
+            }
+
 
         </div>
     )

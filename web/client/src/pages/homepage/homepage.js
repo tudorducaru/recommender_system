@@ -3,8 +3,11 @@ import './homepage.css';
 import FeedCard from '../../components/feedCard/feedCard';
 import DataService from '../../services/dataService';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Homepage = () => {
+
+    const [loading, setLoading] = useState(false);
 
     // Store recommended feeds in local state
     const [recommendedFeeds, setRecommendedFeeds] = useState([]);
@@ -15,19 +18,23 @@ const Homepage = () => {
     // Load recommended feeds
     useEffect(() => {
 
+        setLoading(true);
+
         if (corex) {
 
             // Recommend feeds based on corex
             DataService.getRecommendedFeedsCorex()
                 .then((data) => setRecommendedFeeds(data))
-                .catch(errorMessage => console.log(errorMessage));
+                .catch(errorMessage => console.log(errorMessage))
+                .finally(() => setLoading(false));
 
         } else {
 
             // Recommend feeds based on tfidf
             DataService.getRecommendedFeedsTfIdf()
                 .then((data) => setRecommendedFeeds(data))
-                .catch(errorMessage => console.log(errorMessage));
+                .catch(errorMessage => console.log(errorMessage))
+                .finally(() => setLoading(false));
 
         }
 
@@ -38,6 +45,8 @@ const Homepage = () => {
         <div className='feeds-container'>
 
             <h1>Recommended Feeds</h1>
+
+            {loading && <Spinner className='custom-spinner' animation='border' />}
 
             <Form.Check
                 type='switch'

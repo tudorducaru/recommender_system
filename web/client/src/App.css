@@ -39,6 +39,7 @@
 
 body {
   background-color: rgb(220, 220, 220) !important;
+  overflow-x: hidden;
 }
 
 .custom-spinner {
@@ -62,4 +63,14 @@ body {
 
 .custom-btn:focus {
   box-shadow: none !important;
+}
+
+.feeds-container {
+  width: 90%;
+}
+
+@media only screen and (min-width: 992px) {
+  .feeds-container {
+    width: 600px;
+  }
 }

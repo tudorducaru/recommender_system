@@ -1,16 +1,19 @@
+.hamburger-container {
+    position: absolute;
+    width: 100vw;
+    height: 64px;
+    background-color: rgb(220, 220, 220);
+    top: 0;
+}
+
 .sidebar-hamburger-icon {
     position: absolute;
     top: 0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .sidebar-container {
     position: fixed;
-    top: 0;
-}
-
-.sidebar-container.show {
-    position: sticky;
     top: 0;
 }
 
@@ -21,6 +24,7 @@
 }
 
 .sidebar {
+    z-index: 2;
     position: fixed;
     left: -280px;    
     height: 100vh;
@@ -73,7 +77,13 @@
 }
 
 @media only screen and (min-width: 992px) {
+    .hamburger-container {
+        background-color: transparent;
+    }
+}
+
+@media only screen and (min-width: 992px) {
     .sidebar-container.show + .main-content {
-        margin-left: 240px;
+        margin-left: 280px;
     }
 }

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
 
@@ -13,7 +13,7 @@ const Sidebar = () => {
     const location = window.location.pathname;
 
     // Whether or not to show the sidebar
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     console.log(show);
 
     return (
@@ -71,11 +71,14 @@ const Sidebar = () => {
             </Container>
 
             {/* Open sidebar button */}
-            <GiHamburgerMenu
-                className='sidebar-hamburger-icon m-3'
-                onClick={() => setShow(true)}
-                size={32}
-            />
+            <div className='hamburger-container'>
+                <GiHamburgerMenu
+                    className='sidebar-hamburger-icon m-3'
+                    onClick={() => setShow(true)}
+                    size={32}
+                />
+            </div>
+
         </div>
     );
 };

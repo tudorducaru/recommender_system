@@ -59,7 +59,7 @@ const Explore = () => {
     };
 
     return (
-        <div style={{ margin: '0 auto', width: '600px' }}>
+        <div className='feeds-container'>
 
             <form onSubmit={handleSearchSubmit}>
                 <input

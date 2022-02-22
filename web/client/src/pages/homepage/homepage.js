@@ -35,7 +35,7 @@ const Homepage = () => {
     }, [corex]);
 
     return (
-        <div style={{ width: '600px' }}>
+        <div className='feeds-container'>
 
             <h1>Recommended Feeds</h1>
 

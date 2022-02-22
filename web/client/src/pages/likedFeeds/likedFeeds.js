@@ -8,7 +8,7 @@ const LikedFeeds = () => {
     const { likedFeeds } = useContext(AuthContext);
 
     return (
-        <div style={{ margin: '32px auto', width: '600px' }}>
+        <div className='feeds-container'>
 
             <h1>Liked Feeds</h1>
 

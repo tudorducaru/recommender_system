@@ -7,7 +7,7 @@ body {
     background-color: #023047 !important;
 }
 
-.login-form {
+.authentication-form {
     background-color: white;
     border-radius: 24px;
 }
@@ -18,7 +18,6 @@ body {
 
 .authentication-container button {
     width: 100%;
-    border-radius: 100px;
 }
 
 .authentication-container h1 {
@@ -63,4 +62,16 @@ body {
 
 .authentication-container .alert {
     width: 100%;
+}
+
+#go-back-btn {
+    background-color: #eb4034 !important;
+}
+
+#go-back-btn:hover {
+    background-color: #c2352b !important;
+}
+
+.registration-step-2-container .word-selection-container {
+    margin-bottom: 32px;
 }

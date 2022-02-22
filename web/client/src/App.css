@@ -49,6 +49,11 @@
 .custom-btn {
   background-color: #FB8500 !important;
   border: none !important;
+  border-radius: 100px !important;
+}
+
+.custom-btn:hover {
+  background-color: #de7500 !important;
 }
 
 .custom-btn:focus {

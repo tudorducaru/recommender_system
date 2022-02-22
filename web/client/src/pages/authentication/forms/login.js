@@ -61,7 +61,7 @@ const LoginForm = () => {
                     handleSubmit,
                     errors
                 }) => (
-                    <Form className='login-form p-3 d-flex flex-column align-items-center' onSubmit={handleSubmit}>
+                    <Form className='authentication-form p-3' onSubmit={handleSubmit}>
 
                         {serverError && <Alert variant='danger'>{serverError}</Alert>}
 
@@ -86,7 +86,7 @@ const LoginForm = () => {
                                 type='password'
                                 name='password'
                                 isInvalid={!!errors.password}
-                                placeholder='Please insert a password'
+                                placeholder='Please insert a password...'
                                 as={Form.Control} />
                             <Form.Control.Feedback type='invalid'>
                                 {errors.password}

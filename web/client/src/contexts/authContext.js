@@ -15,7 +15,7 @@ export const AuthProvider = props => {
     const logoutUser = () => setUser(false);
 
     // Keep user's liked feeds in the provider's state
-    const [likedFeeds, setLikedFeeds] = useState();
+    const [likedFeeds, setLikedFeeds] = useState([]);
 
     // Add liked feed to global state
     const addLikedFeed = feed => {

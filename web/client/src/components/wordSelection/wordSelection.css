@@ -1,11 +1,18 @@
 .word {
     text-align: center;
     border: 1px solid black;
-    margin: 8px;
-    padding: 8px;
+    margin: 8px !important;
     border-radius: 8px;
+    border: 2px solid transparent;
+    background-color: #dfdfdf;
+    cursor: pointer;
+    padding: 8px 24px !important;
 }
 
 .word.selected {
-    border: 1px solid #0d6efd;
+    border: 2px solid #FB8500;
+}
+
+.word-selection-container {
+    min-height: 100px;
 }

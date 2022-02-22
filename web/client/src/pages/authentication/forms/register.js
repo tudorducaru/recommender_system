@@ -43,13 +43,14 @@ const UserInfoForm = props => {
                 handleSubmit,
                 errors
             }) => (
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className='form-group'>
+                <Form className='authentication-form p-3' onSubmit={handleSubmit}>
+                    <Form.Group className='form-group mb-3'>
                         <Form.Label>Email</Form.Label>
                         <Field
                             type='text'
                             name='email'
                             isInvalid={!!errors.email}
+                            placeholder='Please insert your email...'
                             as={Form.Control}
                         />
                         <Form.Control.Feedback type='invalid'>
@@ -57,31 +58,33 @@ const UserInfoForm = props => {
                         </Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group className='form-group'>
+                    <Form.Group className='form-group mb-3'>
                         <Form.Label>Password</Form.Label>
                         <Field
                             type='password'
                             name='password'
                             isInvalid={!!errors.password}
+                            placeholder='Please insert a password...'
                             as={Form.Control} />
                         <Form.Control.Feedback type='invalid'>
                             {errors.password}
                         </Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group className='form-group'>
+                    <Form.Group className='form-group mb-2'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Field
                             type='password'
                             name='passwordConfirm'
                             isInvalid={!!errors.passwordConfirm}
+                            placeholder='Please repeat your password...'
                             as={Form.Control} />
                         <Form.Control.Feedback type='invalid'>
                             {errors.passwordConfirm}
                         </Form.Control.Feedback>
                     </Form.Group>
 
-                    <Button className='custom-button' variant="primary" type="submit" disabled={isSubmitting}>
+                    <Button className='custom-btn mt-5' variant="primary" type="submit" disabled={isSubmitting}>
                         Next Step
                     </Button>
                 </Form>
@@ -197,8 +200,8 @@ const RegistrationForm = () => {
                             words={userInfo.words}
                             handleWordClick={handleWordClick}
                         />
-                        <Button onClick={() => setShowWordSelection(false)}>Go back</Button>
-                        <Button className='ms-3' onClick={handleSubmit}>Confirm</Button>
+                        <Button className='custom-btn mt-5 mb-3' onClick={handleSubmit}>Confirm</Button>
+                        <Button className='custom-btn' id='go-back-btn' onClick={() => setShowWordSelection(false)}>Go back</Button>
                     </div>
             }
 

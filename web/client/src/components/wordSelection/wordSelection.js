@@ -4,22 +4,29 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DataService from '../../services/dataService';
+import Spinner from 'react-bootstrap/Spinner';
 
 const WordSelection = props => {
 
     const [words, setWords] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
 
+        setLoading(true);
+
         DataService.getWords()
             .then((data) => setWords(data.words))
-            .catch(errorMessage => console.log(errorMessage));
+            .catch(errorMessage => console.log(errorMessage))
+            .finally(() => setLoading(false));
 
     }, []);
 
     return (
-        <Container fluid>
+        <Container className='word-selection-container position-relative' fluid>
             <Row className='justify-content-center'>
+
+                {loading && <Spinner className='custom-spinner' animation='border' />}
 
                 {
                     words.map(word => {

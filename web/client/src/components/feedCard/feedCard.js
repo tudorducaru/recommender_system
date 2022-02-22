@@ -42,24 +42,23 @@ const FeedCard = props => {
     }
 
     return (
-        <Container className='feed-card mb-3 px-3 py-2 align-items-center' key={feed.id} fluid>
+        <Container className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
             <Row>
                 <Col>
                     <p className='feed-card-title'>
                         {feed.title}
                     </p>
-                    <p className='feed-card-description mb-0'>
+                    <div className='feed-card-description mb-0'>
                         {feed.description}
-                    </p>
-                    <p>{feed.url}</p>
+                    </div>
                 </Col>
                 <Col className='col-auto d-flex align-items-center'>
 
                     {/* Show appropriate icon according to prop */}
                     {
                         checkLiked() ? 
-                            <AiFillStar onClick={handleDislike} size={32} /> :
-                            <AiOutlineStar onClick={handleLike} size={32} />
+                            <AiFillStar className='like-icon' onClick={handleDislike} size={24} /> :
+                            <AiOutlineStar className='like-icon' onClick={handleLike} size={24} />
                     }
                     
                 </Col>

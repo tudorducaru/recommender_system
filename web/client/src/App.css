@@ -37,6 +37,10 @@
   }
 }
 
+body {
+  background-color: rgb(220, 220, 220) !important;
+}
+
 .custom-spinner {
   height: 32px;
   width: 32px;

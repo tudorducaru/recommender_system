@@ -17,15 +17,15 @@
 .main-content {
     transition: all 1s;
     width: 100%;
-    margin: 0;
+    margin-top: 64px;
 }
 
 .sidebar {
     position: fixed;
-    left: -240px;    
+    left: -280px;    
     height: 100vh;
-    width: 240px !important;
-    background-color: #ffcb3d;
+    width: 280px !important;
+    background-color: #023047;
     transition: all 1s;
 }
 
@@ -35,6 +35,41 @@
 
 .sidebar-hamburger-icon {
     position: absolute;
+}
+
+.sidebar-hamburger-icon:hover {
+    opacity: 0.8;
+}
+
+.sidebar-close {
+    color: white;
+}
+
+.sidebar-close:hover {
+    opacity: 0.8;
+}
+
+.sidebar-link {
+    margin-bottom: 16px;
+}
+
+.sidebar-link .col {
+    text-align: center;
+    padding: 12px;
+}
+
+.sidebar-link .col a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar-link .col a:hover {
+    color: rgb(187, 187, 187);
+}
+
+.sidebar-link.selected .col {
+    border-radius: 8px;
+    background-color:#004469;
 }
 
 @media only screen and (min-width: 992px) {

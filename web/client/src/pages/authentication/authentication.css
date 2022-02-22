@@ -3,8 +3,12 @@
     width: 90%;
 }
 
-body {
-    background-color: #023047 !important;
+.authentication-background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #023047;
+    top: 0;
 }
 
 .authentication-form {
@@ -23,6 +27,7 @@ body {
 .authentication-container h1 {
     text-align: center;
     color: white;
+    position: relative;
 }
 
 /* sm breakpoint */
@@ -37,6 +42,7 @@ body {
 }
 
 .auth-toggle {
+    position: relative;
     cursor: pointer;
     color: white;
     text-align: center;

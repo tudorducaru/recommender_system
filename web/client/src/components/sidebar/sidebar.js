@@ -9,61 +9,70 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
 
+    // Get the current location of the user
+    const location = window.location.pathname;
+
     // Whether or not to show the sidebar
     const [show, setShow] = useState(true);
     console.log(show);
 
     return (
         <div className={'sidebar-container ' + (show ? 'show' : '')}>
-            <Container className='sidebar'>
-                
+            <Container className='sidebar d-flex flex-column justify-content-between'>
+
                 {/* Close sidebar button */}
                 <Row className='justify-content-end'>
                     <Col className='col-auto'>
-                        <AiOutlineClose onClick={() => setShow(false)} size={16} />
+                        <AiOutlineClose
+                            className='sidebar-close'
+                            onClick={() => setShow(false)}
+                            size={16}
+                        />
                     </Col>
                 </Row>
 
-                {/* Links to pages */}
-                <Row>
-                    <Col>
-                        <Link to='/'>
-                            Recommended For You
-                        </Link>
-                    </Col>
+                <Row className='justify-content-center'>
+                    {/* Links to pages */}
+                    <Row className={'sidebar-link ' + (location === '/' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/'>
+                                Recommended For You
+                            </Link>
+                        </Col>
+                    </Row>
+
+                    <Row className={'sidebar-link ' + (location === '/explore' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/explore'>
+                                Explore
+                            </Link>
+                        </Col>
+                    </Row>
+
+                    <Row className={'sidebar-link ' + (location === '/likedFeeds' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/likedFeeds'>
+                                Liked Feeds
+                            </Link>
+                        </Col>
+                    </Row>
+
+                    <Row className={'sidebar-link ' + (location === '/settings' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/settings'>
+                                Settings
+                            </Link>
+                        </Col>
+                    </Row>
                 </Row>
 
-                <Row>
-                    <Col>
-                        <Link to='/explore'>
-                            Explore
-                        </Link>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Link to='/likedFeeds'>
-                            Liked Feeds
-                        </Link>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Link to='/settings'>
-                            Settings
-                        </Link>
-                    </Col>
-                </Row>
-
-
+                <Row></Row>
 
             </Container>
 
             {/* Open sidebar button */}
             <GiHamburgerMenu
-                className='sidebar-hamburger-icon'
+                className='sidebar-hamburger-icon m-3'
                 onClick={() => setShow(true)}
                 size={32}
             />

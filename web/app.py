@@ -653,5 +653,5 @@ def addLikedFeed():
         return 'Feed inserted successfully'
 
     except:
-        return 'Could not store new feed', 500
+        return 'Feed already exists in your profile', 500
     

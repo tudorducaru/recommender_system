@@ -45,9 +45,6 @@ $(document).ready(async () => {
                     // Set a listener on the add feed button
                     $('#add-feed-btn').on('click', async () => {
 
-                        // Add the feed to the database
-
-
                         // Get csrf cookie
                         chrome.cookies.get({
                             url: 'http://localhost:5000',
@@ -55,6 +52,8 @@ $(document).ready(async () => {
                         }, async csrf_cookie => {
 
                             try {
+
+                                // Add the feed to the database
                                 await axios.post(
                                     'http://localhost:5000/addLikedFeed',
                                     {
@@ -74,6 +73,9 @@ $(document).ready(async () => {
                                 $('.authenticated-container').addClass('d-none');
                                 $('.result').removeClass('d-none');
                                 $('.failure').removeClass('d-none');
+
+                                // Display error message
+                                $('.error-message').text(e.response.data);
                             }
                         });
 

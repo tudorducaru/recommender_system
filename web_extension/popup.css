@@ -35,3 +35,11 @@
 .custom-btn:focus {
     box-shadow: none !important;
 }
+
+.failure p {
+    margin-bottom: 8px;
+}
+
+.error-message {
+    font-weight: bold;
+}

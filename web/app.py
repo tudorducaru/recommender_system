@@ -7,6 +7,12 @@ from flask_cors import CORS
 import numpy as np
 from sklearn.metrics.pairwise import euclidean_distances
 import scipy
+import requests
+from bs4 import BeautifulSoup
+import feedparser
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import random
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -537,3 +543,111 @@ def updateWords():
     except Exception as e:
         print(e)
         return 'Could not update words', 500
+
+
+# Add as new feed from the chrome extension
+# Checks if the feed exists in the database and, if not,
+# generates features for it and then saves it
+@app.route('/addLikedFeed', methods=['POST'])
+@jwt_required()
+def addLikedFeed():
+
+    # Get the user's id
+    user_id = get_jwt_identity()
+
+    # Get the feed url from the request body
+    feed_url = request.json.get('feed_url', '')
+    if not feed_url:
+        return 'No feed provided', 400
+
+    # Connect to the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    feed_id = -1
+
+    # Check if the feed already exists in the database
+    c.execute('SELECT _id FROM feeds WHERE url = ?', (feed_url,))
+    
+    feeds = c.fetchall()
+    if len(feeds) > 0:
+
+        # Feed exists in the database, save the id in the feed_id variable
+        feed_id = feeds[0][0]
+
+    else:
+
+        # return if the feed can not be parsed
+        try:
+
+            # get the rss feed content from the url
+            headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Mobile Safari/537.36'}
+            webpage = requests.get(feed_url, headers=headers, timeout=10)
+
+            d = feedparser.parse(webpage.content)
+        except Exception as e:
+            return 'Could not access feed', 400
+
+        # feed must be in english
+        language = d['feed'].get('language', '')
+        if 'en' not in language:
+            return 'Feed is not in English', 400
+
+        # body of text
+        raw_text = ''
+
+        # check that the feed has a title, description and at least one entry
+        title = d['feed'].get('title')
+        description = d['feed'].get('description')
+        entries = d['entries']
+
+        if not title or not description or len(entries) == 0:
+            return 'Feed does not contain required information', 400
+
+        # feed is valid, continue feature extraction
+        # add title and description to body of text
+        raw_text = title + ' ' + description
+
+        # add the title and description of each entry to the body of text
+        for entry in entries:
+                
+            # get entry info
+            entry_title = entry.get('title')
+            entry_title = entry_title if entry_title is not None else ''
+
+            entry_description = entry.get('description')
+            entry_description = entry_description if entry_description is not None else ''
+
+            # add entry info to body of text
+            raw_text = raw_text + ' ' + entry_title + ' ' + entry_description
+
+        # remove html tags
+        raw_text = BeautifulSoup(raw_text, 'html.parser').get_text()
+            
+        # check that the text has at least 100 words
+        if len(raw_text.split()) > 100:
+
+            # select first 500 words
+            raw_text = ' '.join(raw_text.split()[:500])
+
+            # Add the feed to the database
+            c.execute('INSERT INTO feeds (url, text, title, description) VALUES (?, ?, ?, ?)', (feed_url, raw_text, title, description))
+            feed_id = c.lastrowid
+
+            conn.commit()
+
+        else:
+            return 'Feed does not contain enough information', 400
+
+    # Add the feed to the user's liked feeds
+    try:
+
+        c.execute('INSERT INTO users_feeds VALUES (?, ?)', (user_id, feed_id))
+        conn.commit()
+        conn.close()
+
+        return 'Feed inserted successfully'
+
+    except:
+        return 'Could not store new feed', 500
+    

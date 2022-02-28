@@ -340,10 +340,12 @@ def recommendCorex():
         return 'Could not retrieve liked feeds', 500
 
     # Get all feed urls from the database
+    # Limit the number of feeds retrieved to be the number of rows in the doc-word matrix
+    # This ensures that feeds that have not been vectorized are not taken into account
     feeds = []
     try: 
 
-        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL')
+        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL LIMIT ?', (labels.shape[0], ))
         for row in c.fetchall():
             feeds.append({
                 'id': row[0],
@@ -435,10 +437,12 @@ def recommendTFIDF():
         return 'Could not retrieve liked feeds', 500
 
     # Get all feed urls from the database
+    # Limit the number of feeds retrieved to be the number of rows in the doc-word matrix
+    # This ensures that feeds that have not been vectorized are not taken into account
     feeds = []
     try: 
 
-        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL')
+        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL LIMIT ?', (doc_word_tfidf.shape[0], ))
         for row in c.fetchall():
             feeds.append({
                 'id': row[0],

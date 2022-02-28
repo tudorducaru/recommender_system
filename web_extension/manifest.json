@@ -8,7 +8,14 @@
         "default_popup": "popup.html"
     },
     "permissions": [
+        "activeTab",
         "cookies",
         "http://localhost:5000/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["jquery.js", "feed_finder.js"]
+        }
     ]
 }

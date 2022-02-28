@@ -1,5 +1,37 @@
-body {
-    height: 500px;
-    width: 300px;
-    /* background-color: blue; */
+.main-container {
+    width: 400px;
+    padding: 16px;
+}
+
+.title {
+    font-size: 24px;
+}
+
+.feed-container {
+    padding: 8px;
+    background-color: #ebebeb;
+    border-radius: 12px;
+}
+
+#feed-url {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.custom-btn {
+    background-color: #FB8500 !important;
+    height: 40px;
+    width: 120px;
+    border: none !important;
+    border-radius: 100px !important;
+    display: block;
+    margin: 0 auto;
+}
+  
+.custom-btn:hover {
+    background-color: #de7500 !important;
+}
+  
+.custom-btn:focus {
+    box-shadow: none !important;
 }

@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "name": "Feed Extension",
+    "description": "Add feeds to your profile",
+    "version": "1.0",
+    "content_security_policy": "script-src 'self' https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js https://code.jquery.com/jquery-3.6.0.min.js; object-src 'self'",
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "cookies",
+        "http://localhost:5000/*"
+    ]
+}

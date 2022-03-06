@@ -1,6 +1,6 @@
 .feed-entry-card {
     background-color: white;
-    height: 520px;
+    /* height: 520px; */
     margin-bottom: 32px;
     border-radius: 16px;    
     box-shadow: 0px 0px 16px 3px #B2B2B2;
@@ -29,6 +29,7 @@
 
 /* https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css */
 .entry-title {
+    height: 48px;
     font-weight: bold;
     -webkit-line-clamp: 2; /* number of lines to show */
     line-clamp: 2; 

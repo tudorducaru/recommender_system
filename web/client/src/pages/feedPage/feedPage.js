@@ -44,7 +44,6 @@ const FeedPage = () => {
 
                                 {
                                     feed.entries.map(entry => {
-                                        console.log(entry);
                                         return <Col className='col-12 col-sm-6 col-md-4'>
                                             <FeedEntryCard entry={entry} />
                                         </Col>;

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import './feedCard.css';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineStar } from 'react-icons/ai';
 import { AiFillStar } from 'react-icons/ai';
 import Container from 'react-bootstrap/Container';
@@ -43,8 +44,11 @@ const FeedCard = props => {
 
     }
 
+    // Use navigation
+    const navigate = useNavigate();
+
     return (
-        <Container onClick={() => window.open(feed.url)} className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
+        <Container onClick={() => navigate(`/feed/${feed.id}`)} className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
             <Row>
                 <Col>
                     <p className='feed-card-title'>

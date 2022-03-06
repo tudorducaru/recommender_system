@@ -1,6 +1,6 @@
 import React from 'react';
 import './feedEntryCard.css';
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
 
 const FeedEntryCard = props => {
 
@@ -9,7 +9,7 @@ const FeedEntryCard = props => {
 
     return (
         <div className='feed-entry-card' onClick={() => window.open(entry.link)}>
-            <img src={entry.image_url}></img>
+            { entry.image_url && <img src={entry.image_url}></img> }
             <div className='feed-entry-body'>
                 <p className='entry-title mb-3'>{entry.title}</p>
                 <p className='entry-author'>{entry.author}</p>

@@ -323,6 +323,9 @@ def recommendCorex():
 
     # Get the user id
     user_id = get_jwt_identity()
+
+    # Get the page number 
+    pageNumber = int(request.args.get('page', 0))
     
     liked_feeds_url = []
     try:
@@ -399,9 +402,13 @@ def recommendCorex():
     # Calculate the distance between user profile and each feed
     distances_matrix = euclidean_distances([user_profile], labels)
 
-    # Get first 25 closest feeds
-    closest_feeds_index = np.argsort(distances_matrix[0])[:25]
-    recommended_feeds = [feeds[i] for i in closest_feeds_index]
+    # Return closest feeds corresponding to the given page
+    limit = 20 # number of feeds per page
+    starting = limit * pageNumber
+    ending = limit * (pageNumber + 1)
+
+    closest_feeds_index = np.argsort(distances_matrix[0])
+    recommended_feeds = [feeds[i] for i in closest_feeds_index[starting:ending]]
 
     return jsonify(recommended_feeds)
 
@@ -413,6 +420,9 @@ def recommendTFIDF():
 
     # Load the doc-word matrix with tf-idf values
     doc_word_tfidf = scipy.sparse.load_npz('../ml/tfidf_matrix.npz')
+
+    # Get the page number 
+    pageNumber = int(request.args.get('page', 0))
 
     # Load urls of feeds liked by the user
     conn = sqlite3.connect('../ml/feeds.db')
@@ -471,10 +481,13 @@ def recommendTFIDF():
     # Calculate the distance between user profile and each feed
     distances_matrix = euclidean_distances([user_profile], doc_word_tfidf)
 
-    # Get first 25 closest feeds
-    closest_feeds_index = np.argsort(distances_matrix[0])[:100]
-    np.random.shuffle(closest_feeds_index)
-    recommended_feeds = [feeds[i] for i in closest_feeds_index[:25]]
+    # Return closest feeds corresponding to the given page
+    limit = 20 # number of feeds per page
+    starting = limit * pageNumber
+    ending = limit * (pageNumber + 1)
+
+    closest_feeds_index = np.argsort(distances_matrix[0])
+    recommended_feeds = [feeds[i] for i in closest_feeds_index[starting:ending]]
 
     return jsonify(recommended_feeds)
 

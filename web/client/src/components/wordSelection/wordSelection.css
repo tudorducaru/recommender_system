@@ -1,16 +1,22 @@
 .word {
     text-align: center;
-    border: 1px solid black;
     margin: 8px !important;
     border-radius: 8px;
-    border: 2px solid transparent;
-    background-color: #dfdfdf;
+    border: 4px solid transparent;
     cursor: pointer;
     padding: 8px 24px !important;
+    background-color: #C9A192;
+    color: black;
+    font-weight: 500;
+}
+
+.word:hover {
+    transform: scale(1.05);
+    transition: all 0.5s;
 }
 
 .word.selected {
-    border: 2px solid #FB8500;
+    border: 4px solid #402826;
 }
 
 .word-selection-container {

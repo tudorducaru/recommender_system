@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
+import logo from '../../logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
 
@@ -14,6 +16,9 @@ const Sidebar = () => {
 
     // Whether or not to show the sidebar
     const [show, setShow] = useState(true);
+
+    // Access navigation
+    const navigate = useNavigate();
 
     return (
         <div className={'sidebar-container ' + (show ? 'show' : '')}>
@@ -29,6 +34,16 @@ const Sidebar = () => {
                         />
                     </Col>
                 </Row>
+
+                <Row>
+                    <Col>
+                        <div >
+                            <img className='brand-image' src={logo} onClick={() => navigate('/')}></img>
+                            <h2 className='brand-name' onClick={() => navigate('/')}>FeedSupply</h2>
+                        </div>
+                    </Col>
+                </Row>
+
 
                 <Row className='justify-content-center'>
                     {/* Links to pages */}
@@ -64,6 +79,10 @@ const Sidebar = () => {
                         </Col>
                     </Row>
                 </Row>
+
+                <Row></Row>
+
+                <Row></Row>
 
                 <Row></Row>
 

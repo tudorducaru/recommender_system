@@ -4,6 +4,9 @@ import DataService from '../../services/dataService';
 import FeedCard from '../../components/feedCard/feedCard';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Explore = () => {
 
@@ -81,9 +84,17 @@ const Explore = () => {
                 />
             </form>
 
-            {
-                feeds.map((feed) => <FeedCard feed={feed} key={feed.id} />)
-            }
+            <div className='divider'></div>
+
+            <Container className='p-0 mt-4' fluid>
+                {
+                    feeds.map((feed) => {
+                        return <Row><Col>
+                            <FeedCard feed={feed} key={feed.id} />
+                        </Col></Row>
+                    })
+                }
+            </Container>
 
             {
                 !loading ?

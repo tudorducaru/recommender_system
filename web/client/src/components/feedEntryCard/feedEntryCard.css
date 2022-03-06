@@ -1,10 +1,10 @@
 .feed-entry-card {
-    background-color: white;
-    /* height: 520px; */
+    background-color: #C9A192;
     margin-bottom: 32px;
     border-radius: 16px;    
-    box-shadow: 0px 0px 16px 3px #B2B2B2;
+    box-shadow: 0px 0px 16px 3px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    color: black;
 }
 
 .feed-entry-card:hover {
@@ -49,9 +49,10 @@
 }
 
 .entry-author {
+    font-weight: 500;
     font-style: italic;
 }
 
 .entry-published {
-    color: rgb(117, 117, 117);
+    color: rgb(65, 65, 65);
 }

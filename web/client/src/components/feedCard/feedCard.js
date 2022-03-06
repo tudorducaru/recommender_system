@@ -48,7 +48,7 @@ const FeedCard = props => {
     const navigate = useNavigate();
 
     return (
-        <Container onClick={() => navigate(`/feed/${feed.id}`)} className='feed-card mb-4 px-3 py-3 align-items-center' key={feed.id} fluid>
+        <Container onClick={() => navigate(`/feed/${feed.id}`)} className='feed-card mt-3 mb-4 px-4 py-4 align-items-center' key={feed.id} fluid>
             <Row>
                 <Col>
                     <p className='feed-card-title'>

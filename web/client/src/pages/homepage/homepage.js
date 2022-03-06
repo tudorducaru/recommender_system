@@ -5,6 +5,9 @@ import DataService from '../../services/dataService';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Homepage = () => {
 
@@ -94,9 +97,17 @@ const Homepage = () => {
                 onChange={(e) => setCorex(!corex)}
             />
 
-            {
-                recommendedFeeds.map((feed) => <FeedCard feed={feed} key={feed.id} />)
-            }
+            <div className='divider'></div>
+
+            <Container className='p-0 mt-4' fluid>
+                {
+                    recommendedFeeds.map((feed) => {
+                        return <Row><Col>
+                            <FeedCard feed={feed} key={feed.id} />
+                        </Col></Row>
+                    })
+                }
+            </Container>
 
             {
                 !loading &&

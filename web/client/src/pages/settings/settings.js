@@ -60,6 +60,7 @@ const Settings = () => {
     return  (
         <div className='settings-container d-flex flex-column align-items-center'>
             <h1>Update Your Preferences</h1>
+            <div className='divider mb-4'></div>
             <WordSelection words={selectedWords} handleWordClick={handleWordClick} />
             <Button onClick={handleUpdateWords} id='confirm-update-words-btn' className='custom-btn mt-5 mb-3'>Confirm</Button>
             <Button id='logout-btn' className='custom-btn' onClick={handleLogout}>Logout</Button>

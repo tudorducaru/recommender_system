@@ -3,8 +3,8 @@
     max-width: 500px;
 }
 
-.settings-container .word {
-    background-color: white;
+.settings-container h1 {
+    align-self: flex-start;
 }
 
 .settings-container .custom-btn {

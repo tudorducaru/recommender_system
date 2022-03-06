@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './authentication.css';
 import LoginForm from './forms/login';
 import RegistrationForm from './forms/register';
+import logo from '../../logo_auth.png';
 
 const Authentication = () => {
 
@@ -12,7 +13,10 @@ const Authentication = () => {
         <div>
             <div className='authentication-background'></div>
             <div className='authentication-container mt-3'>
-                <h1 className='mb-5'>Authenticate</h1>
+
+                <img className='brand-image' src={logo} ></img>
+
+                <h1 className='mb-5 brand-name'>FeedSupply</h1>
 
                 {
                     showLogin ? <LoginForm /> : <RegistrationForm />

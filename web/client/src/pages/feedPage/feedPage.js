@@ -46,7 +46,7 @@ const FeedPage = () => {
 
                         <div className='divider'></div>
 
-                        <Container className='p-0' fluid>
+                        <Container className='p-0 mt-4 entries-container' fluid>
 
                             <Row>
 
@@ -62,11 +62,11 @@ const FeedPage = () => {
 
                         </Container>
 
-                        <h2>Similar Feeds</h2>
+                        <h2 className='mt-4'>Similar Feeds</h2>
 
                         <div className='divider'></div>
 
-                        <Container className='p-0' fluid>
+                        <Container className='p-0 mt-4' fluid>
 
                             {
                                 similarFeeds.map(feed => {

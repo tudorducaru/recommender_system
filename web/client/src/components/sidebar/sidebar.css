@@ -18,6 +18,12 @@
     top: 0;
 }
 
+.sidebar .brand-name {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 .main-content {
     transition: all 1s;
     width: 100%;
@@ -30,8 +36,12 @@
     left: -280px;    
     height: 100vh;
     width: 280px !important;
-    background-color: #023047;
+    background-color: #261817;
     transition: all 1s;
+}
+
+.sidebar .brand-image {
+    cursor: pointer;
 }
 
 .sidebar-container.show .sidebar {
@@ -74,7 +84,7 @@
 
 .sidebar-link.selected .col {
     border-radius: 8px;
-    background-color:#004469;
+    background-color: #402826;
 }
 
 @media only screen and (min-width: 992px) {

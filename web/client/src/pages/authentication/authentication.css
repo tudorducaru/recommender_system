@@ -7,13 +7,28 @@
     width: 100vw;
     height: 100vh;
     position: absolute;
-    background-color: #023047;
+    background-color: #603D2F ;
     top: 0;
 }
 
 .authentication-form {
     background-color: white;
     border-radius: 24px;
+}
+
+.brand-image {
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    z-index: 2;
+    position: relative;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-family: 'Pacifico';
+    letter-spacing: 1px;
+    text-align: center;
 }
 
 .authentication-container .form-group {
@@ -55,6 +70,7 @@
 
 .authentication-container .form-label {
     font-weight: bold;
+    color: black;
 }
 
 .authentication-container .form-control {

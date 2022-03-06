@@ -684,9 +684,28 @@ def parseFeed(feedID):
             webpage = requests.get(feedURL, headers=headers, timeout=10)
 
             d = feedparser.parse(webpage.content)
+
+            # Extract the image for each entry
+            # Extract the html for each entry's summary
+            for i in range(len(d.entries)):
+                entry = d.entries[i]
+
+                # Parse the content of the entry
+                soup = BeautifulSoup(entry.content[0].value, 'html.parser')
+                img_url = soup.select('img:first-child')[0].attrs['src']
+
+                # Get the summary
+                soup = BeautifulSoup(entry.summary, 'html.parser')
+                entry_summary = soup.get_text()
+
+                # Set the image url and parse entry summary as attributes
+                d.entries[i]['image_url'] = img_url
+                d.entries[i]['parsed_summary'] = entry_summary
+
             return jsonify(d)
             
         except Exception as e:
+            print
             return 'Could not access feed', 400
 
 

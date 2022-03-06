@@ -154,6 +154,21 @@ class DataService {
         }
     }
 
+    // Get similar feeds for a given feed ID
+    async getSimilarFeeds(feedID) {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/getSimilarFeeds/${feedID}`
+            );
+
+            return response.data;
+
+        } catch (err) {
+            throw err.response.data;
+        }
+    }
+
 };
 
 export default new DataService(); 

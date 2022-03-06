@@ -770,7 +770,8 @@ def getSimilarFeeds(feedID):
     distances_matrix = euclidean_distances([feature_vector], doc_word_tfidf)
 
     # Get first 5 closest feeds
-    closest_feeds_index = np.argsort(distances_matrix[0])[:5]
+    # 1st closest feed will be the feed for which we get the recommendations, slice it
+    closest_feeds_index = np.argsort(distances_matrix[0])[1:6]
     recommended_feeds = [feeds[i] for i in closest_feeds_index]
 
     return jsonify(recommended_feeds)

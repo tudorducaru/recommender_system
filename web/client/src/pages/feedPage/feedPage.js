@@ -38,14 +38,14 @@ const FeedPage = () => {
 
                         <div className='divider'></div>
 
-                        <Container fluid>
+                        <Container className='p-0' fluid>
 
                             <Row>
 
                                 {
                                     feed.entries.map(entry => {
                                         console.log(entry);
-                                        return <Col>
+                                        return <Col className='col-12 col-sm-6 col-md-4'>
                                             <FeedEntryCard entry={entry} />
                                         </Col>;
                                     })

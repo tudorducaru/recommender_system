@@ -14,7 +14,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -35,7 +35,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -49,7 +49,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -64,7 +64,7 @@ class DataService {
             return;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -79,7 +79,7 @@ class DataService {
             return;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -93,7 +93,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -107,7 +107,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -121,7 +121,7 @@ class DataService {
             return response.data;
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
         }
     }
 
@@ -135,7 +135,22 @@ class DataService {
             )
 
         } catch (err) {
-            return err.response.data;
+            throw err.response.data;
+        }
+    }
+
+    // Parse feed by ID
+    async parseFeed(feedID) {
+        try {
+
+            const response = await axios.get(
+                `${API_URL}/parseFeed/${feedID}`
+            );
+
+            return response.data;
+
+        } catch (err) {
+            throw err.response.data;
         }
     }
 

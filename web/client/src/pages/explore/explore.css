@@ -1,6 +1,6 @@
 .search-input {
-    background-color: #261817;
-    border: none;
+    background-color: #261817 !important;
+    border: none !important;
     color: #ebebeb !important;
     padding-bottom: 8px !important;
     height: 48px;

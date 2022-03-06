@@ -656,10 +656,10 @@ def addLikedFeed():
         return 'Feed already exists in your profile', 500
     
 
-# Return the url of a feed based on its ID
-@app.route('/getUrlByID/<feedID>')
+# Parse a feed based on its id
+@app.route('/parseFeed/<feedID>')
 @jwt_required()
-def getUrlByID(feedID):
+def parseFeed(feedID):
 
     # Get the URL from the database
     conn = sqlite3.connect('../ml/feeds.db')
@@ -673,7 +673,22 @@ def getUrlByID(feedID):
         if len(rows) == 0:
             return 'Invalid feed ID', 400
 
-        return jsonify({ 'url': rows[0][0] })
+        # Get feed URL
+        feedURL = rows[0][0]
+
+        # Try to parse feed
+        try:
+
+            # get the rss feed content from the url
+            headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Mobile Safari/537.36'}
+            webpage = requests.get(feedURL, headers=headers, timeout=10)
+
+            d = feedparser.parse(webpage.content)
+            return jsonify(d)
+            
+        except Exception as e:
+            return 'Could not access feed', 400
+
 
     except:
         return 'Could not retrieve feed URL', 500

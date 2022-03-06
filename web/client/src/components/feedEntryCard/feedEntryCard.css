@@ -29,7 +29,6 @@
 
 /* https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css */
 .entry-title {
-    height: 48px;
     font-weight: bold;
     -webkit-line-clamp: 2; /* number of lines to show */
     line-clamp: 2; 

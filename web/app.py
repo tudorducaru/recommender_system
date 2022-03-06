@@ -655,3 +655,25 @@ def addLikedFeed():
     except:
         return 'Feed already exists in your profile', 500
     
+
+# Return the url of a feed based on its ID
+@app.route('/getUrlByID/<feedID>')
+@jwt_required()
+def getUrlByID(feedID):
+
+    # Get the URL from the database
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    try:
+
+        c.execute('SELECT url FROM feeds WHERE _id = ?', (feedID,))
+        rows = c.fetchall()
+
+        if len(rows) == 0:
+            return 'Invalid feed ID', 400
+
+        return jsonify({ 'url': rows[0][0] })
+
+    except:
+        return 'Could not retrieve feed URL', 500

@@ -21,6 +21,9 @@ const FeedPage = () => {
     // Get the contents of the feed
     useEffect(async () => {
 
+        // Scroll to top (useful when use clicks on one of the similar feeds)
+        window.scrollTo(0, 0);
+
         // Get the feed 
         DataService.parseFeed(feedID)
             .then(f => setFeed(f))
@@ -31,7 +34,7 @@ const FeedPage = () => {
             .then(sf => setSimilarFeeds(sf))
             .catch(errorMessage => console.log(errorMessage));
 
-    }, []);
+    }, [params.feedID]);
 
     return (
 

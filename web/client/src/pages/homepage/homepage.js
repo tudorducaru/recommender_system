@@ -4,6 +4,7 @@ import FeedCard from '../../components/feedCard/feedCard';
 import DataService from '../../services/dataService';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
 
 const Homepage = () => {
 
@@ -15,6 +16,9 @@ const Homepage = () => {
     // Whether recommendations should be made based on corex or tfidf
     const [corex, setCorex] = useState(false);
 
+    // Keep track of the current page
+    const [page, setPage] = useState(0);
+
     // Load recommended feeds
     useEffect(() => {
 
@@ -23,7 +27,7 @@ const Homepage = () => {
         if (corex) {
 
             // Recommend feeds based on corex
-            DataService.getRecommendedFeedsCorex()
+            DataService.getRecommendedFeedsCorex(page)
                 .then((data) => setRecommendedFeeds(data))
                 .catch(errorMessage => console.log(errorMessage))
                 .finally(() => setLoading(false));
@@ -31,7 +35,7 @@ const Homepage = () => {
         } else {
 
             // Recommend feeds based on tfidf
-            DataService.getRecommendedFeedsTfIdf()
+            DataService.getRecommendedFeedsTfIdf(page)
                 .then((data) => setRecommendedFeeds(data))
                 .catch(errorMessage => console.log(errorMessage))
                 .finally(() => setLoading(false));
@@ -40,6 +44,40 @@ const Homepage = () => {
 
 
     }, [corex]);
+
+    // Handle loading more data
+    const handleLoadMore = () => {
+
+        // Increment page number
+        setPage(prevPage => prevPage++);
+
+        if (corex) {
+
+            // Recommend feeds based on corex
+            DataService.getRecommendedFeedsCorex(page + 1)
+                .then((data) => {
+
+                    // Increment the page
+                    setPage(prevPage => prevPage + 1);
+
+                    setRecommendedFeeds([...recommendedFeeds, ...data]);
+                })
+                .catch(errorMessage => console.log(errorMessage));
+
+        } else {
+
+            // Recommend feeds based on tfidf
+            DataService.getRecommendedFeedsTfIdf(page + 1)
+                .then((data) => {
+
+                    // Increment the page
+                    setPage(prevPage => prevPage + 1);
+
+                    setRecommendedFeeds([...recommendedFeeds, ...data]);
+                })
+                .catch(errorMessage => console.log(errorMessage));
+        }
+    };
 
     return (
         <div className='feeds-container'>
@@ -58,6 +96,13 @@ const Homepage = () => {
 
             {
                 recommendedFeeds.map((feed) => <FeedCard feed={feed} key={feed.id} />)
+            }
+
+            {
+                !loading &&
+                <div className='d-flex justify-content-center'>
+                    <Button className='custom-btn load-more-btn' onClick={handleLoadMore}>Load More</Button>
+                </div>
             }
 
         </div>

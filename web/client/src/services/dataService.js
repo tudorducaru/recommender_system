@@ -84,11 +84,16 @@ class DataService {
     }
 
     // Get feeds recommended based on corex
-    async getRecommendedFeedsCorex() {
+    async getRecommendedFeedsCorex(page) {
         try {
 
             const response = await axios.get(
-                `${API_URL}/recommend/corex`
+                `${API_URL}/recommend/corex`,
+                {
+                    params: {
+                        page
+                    }
+                }
             );
             return response.data;
 
@@ -98,11 +103,16 @@ class DataService {
     }
 
     // Get feeds recommended based on tfidf
-    async getRecommendedFeedsTfIdf() {
+    async getRecommendedFeedsTfIdf(page) {
         try {
 
             const response = await axios.get(
-                `${API_URL}/recommend/tfidf`
+                `${API_URL}/recommend/tfidf`,
+                {
+                    params: {
+                        page
+                    }
+                }
             );
             return response.data;
 

@@ -486,6 +486,8 @@ def recommendTFIDF():
     starting = limit * pageNumber
     ending = limit * (pageNumber + 1)
 
+    print(starting, ending)
+
     closest_feeds_index = np.argsort(distances_matrix[0])
     recommended_feeds = [feeds[i] for i in closest_feeds_index[starting:ending]]
 

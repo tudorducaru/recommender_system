@@ -397,7 +397,7 @@ def recommendCorex():
         # Use the topic associated with the word
         user_profile += word_clusters[word_index]
 
-    user_profile /= (len(liked_feeds_url) + len(user_words))
+    user_profile /= (len(liked_feeds_url) + len(user_words)) if (len(liked_feeds_url) + len(user_words)) > 0 else 1
 
     # Calculate the distance between user profile and each feed
     distances_matrix = euclidean_distances([user_profile], labels)
@@ -476,7 +476,7 @@ def recommendTFIDF():
         feed_index = next((i for (i, element) in enumerate(feeds) if element['url'] == feed_url), 0)
         user_profile += np.array(doc_word_tfidf[feed_index].todense()).ravel()
 
-    user_profile /= len(liked_feeds_url)
+    user_profile /= (len(liked_feeds_url) if len(liked_feeds_url) > 0 else 1)
 
     # Calculate the distance between user profile and each feed
     distances_matrix = euclidean_distances([user_profile], doc_word_tfidf)

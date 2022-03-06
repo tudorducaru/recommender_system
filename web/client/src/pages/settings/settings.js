@@ -37,33 +37,38 @@ const Settings = () => {
 
             // Remove from selected words
             setSelectedWords(prevSelectedWords => {
-                return prevSelectedWords.filter(element => element !== word);
+
+                const newWords = prevSelectedWords.filter(element => element !== word);
+
+                // Update words in the database
+                DataService.updateUserWords(newWords)
+                    .catch(error => console.log(error));
+
+                return newWords;
             });
         } else {
 
             // Add to selected words
             setSelectedWords(prevSelectedWords => {
+
+                // Update words in the database
+                DataService.updateUserWords([...prevSelectedWords, word])
+                    .catch(error => console.log(error));
+
                 return [...prevSelectedWords, word];
             });
         }
 
-    }
 
-    // Update user's words in the database
-    const handleUpdateWords = () => {
-
-        DataService.updateUserWords(selectedWords)
-            .catch(error => console.log(error));
 
     }
 
-    return  (
+    return (
         <div className='settings-container d-flex flex-column align-items-center'>
             <h1>Update Your Preferences</h1>
             <div className='divider mb-4'></div>
             <WordSelection words={selectedWords} handleWordClick={handleWordClick} />
-            <Button onClick={handleUpdateWords} id='confirm-update-words-btn' className='custom-btn mt-5 mb-3'>Confirm</Button>
-            <Button id='logout-btn' className='custom-btn' onClick={handleLogout}>Logout</Button>
+            <Button id='logout-btn' className='custom-btn mt-5' onClick={handleLogout}>Logout</Button>
         </div>
     )
 }

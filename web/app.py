@@ -715,6 +715,62 @@ def parseFeed(feedID):
             print(e)
             return 'Could not access feed', 400
 
+    except:
+        return 'Could not retrieve feed URL', 500
+
+
+# Return similar feeds for a given feed ID
+@app.route('/getSimilarFeeds/<feedID>')
+@jwt_required()
+def getSimilarFeeds(feedID):
+
+    # Load the doc-word matrix with tf-idf values
+    doc_word_tfidf = scipy.sparse.load_npz('../ml/tfidf_matrix.npz')
+
+    # Load the url of the given feed
+    conn = sqlite3.connect('../ml/feeds.db')
+    c = conn.cursor()
+
+    feed_url = ''
+    try:
+
+        c.execute('SELECT url FROM feeds WHERE _id = ?', (feedID, ))
+        feed_url = c.fetchall()[0][0]
 
     except:
         return 'Could not retrieve feed URL', 500
+
+    # Get all feed urls from the database
+    # Limit the number of feeds retrieved to be the number of rows in the doc-word matrix
+    # This ensures that feeds that have not been vectorized are not taken into account
+    feeds = []
+    try: 
+
+        c.execute('SELECT _id, url, title, description FROM feeds WHERE text IS NOT NULL AND title IS NOT NULL AND description IS NOT NULL LIMIT ?', (doc_word_tfidf.shape[0], ))
+        for row in c.fetchall():
+            feeds.append({
+                'id': row[0],
+                'url': row[1],
+                'title': row[2],
+                'description': row[3]
+            })
+
+    except Exception as e:
+        print(e)
+        return 'Could not retrieve feeds', 500
+
+    # Close db connection
+    conn.close()
+
+    # Get the feature vector of the feed
+    feed_index = next((i for (i, element) in enumerate(feeds) if element['url'] == feed_url), 0)
+    feature_vector = np.array(doc_word_tfidf[feed_index].todense()).ravel()
+
+    # Calculate the distance between user profile and each feed
+    distances_matrix = euclidean_distances([feature_vector], doc_word_tfidf)
+
+    # Get first 5 closest feeds
+    closest_feeds_index = np.argsort(distances_matrix[0])[:5]
+    recommended_feeds = [feeds[i] for i in closest_feeds_index]
+
+    return jsonify(recommended_feeds)

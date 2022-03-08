@@ -29,6 +29,17 @@ app.config['JWT_SESSION_COOKIE'] = False
 app.config['JWT_COOKIE_SECURE'] = True
 jwt = JWTManager(app)
 
+
+conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
+c = conn.cursor()
+
+c.execute('SELECT * FROM users WHERE email = ?', (email,))
+rows = c.fetchall()
+print(rows[0])
+
+
+
+
 # Registration route
 @app.route('/register', methods=['POST'])
 def register():
@@ -98,11 +109,7 @@ def login():
         return 'Please send all required information for registration!', 400
 
     # Retrieve the user record
-    conn = ''
-    try: 
-        conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
-    except Exception as e:
-        print(e)
+    conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
     c = conn.cursor()
 
     c.execute('SELECT * FROM users WHERE email = ?', (email,))

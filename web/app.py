@@ -30,7 +30,7 @@ app.config['JWT_COOKIE_SECURE'] = True
 jwt = JWTManager(app)
 
 
-conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
+conn = sqlite3.connect('/feeds.db')
 c = conn.cursor()
 
 c.execute('SELECT * FROM users WHERE email = ?', ('tducaru@gmail.com',))

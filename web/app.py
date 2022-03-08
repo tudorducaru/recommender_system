@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, JWTManager, set_access_cookies, jwt_required, unset_access_cookies, get_jwt_identity
@@ -15,7 +15,7 @@ from nltk.corpus import stopwords
 import random
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='client/build', static_url_path='/build')
 
 # Configure CORS
 CORS(app, supports_credentials=True)
@@ -790,3 +790,9 @@ def getSimilarFeeds(feedID):
     recommended_feeds = [feeds[i] for i in closest_feeds_index]
 
     return jsonify(recommended_feeds)
+
+# Server react app
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return app.send_static_file("index.html")

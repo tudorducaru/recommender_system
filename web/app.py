@@ -46,7 +46,7 @@ def register():
         return 'Password must have at least 6 characters', 400
 
     # Check if the email already exists in the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     c.execute('SELECT * FROM users WHERE email = ?', (email,))
@@ -97,7 +97,7 @@ def login():
         return 'Please send all required information for registration!', 400
 
     # Retrieve the user record
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     c.execute('SELECT * FROM users WHERE email = ?', (email,))
@@ -142,7 +142,7 @@ def verifyUser():
 def getWords():
 
     # Retrieve all words from the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     c.execute('SELECT word FROM words')
@@ -176,7 +176,7 @@ def getFeeds():
     limit = 10
 
     # Retrieve feeds for the corresponding page from the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     searchTerm = "%" + searchTerm + "%"
@@ -209,7 +209,7 @@ def like():
         return 'Please provide a feed id', 400
 
     # Try to record the like in the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     try:
@@ -245,7 +245,7 @@ def dislike():
         return 'Please provide a feed id', 400
 
     # Try to record the like in the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     try:
@@ -276,7 +276,7 @@ def getLikedFeeds():
     user_id = get_jwt_identity()
 
     # Try to get the feeds liked by the user
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     try:
@@ -318,7 +318,7 @@ def recommendCorex():
     words = np.load('../ml/binary_words.npy')
 
     # Load urls of feeds liked by the user
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     # Get the user id
@@ -425,7 +425,7 @@ def recommendTFIDF():
     pageNumber = int(request.args.get('page', 0))
 
     # Load urls of feeds liked by the user
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     # Get the user id
@@ -503,7 +503,7 @@ def getUserWords():
     user_id = get_jwt_identity()
 
     # Connect to the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     # Get all words selected by the user
@@ -541,7 +541,7 @@ def updateWords():
     words = request.json.get('words', [])
 
     # Connect to the db
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     # Delete user's current words from the db
@@ -580,7 +580,7 @@ def addLikedFeed():
         return 'No feed provided', 400
 
     # Connect to the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     feed_id = -1
@@ -677,7 +677,7 @@ def addLikedFeed():
 def parseFeed(feedID):
 
     # Get the URL from the database
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     try:
@@ -743,7 +743,7 @@ def getSimilarFeeds(feedID):
     doc_word_tfidf = scipy.sparse.load_npz('../ml/tfidf_matrix.npz')
 
     # Load the url of the given feed
-    conn = sqlite3.connect('../ml/feeds.db')
+    conn = sqlite3.connect('./../ml/feeds.db')
     c = conn.cursor()
 
     feed_url = ''

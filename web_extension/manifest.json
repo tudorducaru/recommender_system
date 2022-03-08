@@ -14,7 +14,8 @@
     "permissions": [
         "activeTab",
         "cookies",
-        "http://localhost:5000/*"
+        "http://localhost:5000/*",
+        "https://feedsupply.herokuapp.com/*"
     ],
     "content_scripts": [
         {

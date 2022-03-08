@@ -1,4 +1,4 @@
 feeds_dev.db
-feeds.db
+web/feeds.db
 stopwords.ipynb
 web/Lib

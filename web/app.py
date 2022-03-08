@@ -13,6 +13,7 @@ import feedparser
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import random
+import os
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='client/build', static_url_path='/build')
@@ -99,7 +100,7 @@ def login():
     # Retrieve the user record
     conn = ''
     try: 
-        conn = sqlite3.connect('./feeds.db')
+        conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
     except Exception as e:
         print(e)
     c = conn.cursor()

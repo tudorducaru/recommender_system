@@ -106,7 +106,7 @@ def login():
         return 'Please send all required information for registration!', 400
 
     # Retrieve the user record
-    conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
+    conn = sqlite3.connect('web/feeds.db')
     c = conn.cursor()
 
     c.execute('SELECT * FROM users WHERE email = ?', (email,))

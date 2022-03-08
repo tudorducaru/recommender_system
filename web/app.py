@@ -29,13 +29,10 @@ app.config['JWT_SESSION_COOKIE'] = False
 app.config['JWT_COOKIE_SECURE'] = True
 jwt = JWTManager(app)
 
-
-conn = sqlite3.connect('feeds.db')
-c = conn.cursor()
-
-c.execute('SELECT * FROM users WHERE email = ?', ('tducaru@gmail.com',))
-rows = c.fetchall()
-print(rows[0])
+import os
+files = [f for f in os.listdir('.') if os.path.isfile(f)]
+for f in files:
+    print(f)
 
 
 

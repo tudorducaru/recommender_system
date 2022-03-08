@@ -99,10 +99,7 @@ def login():
     # Retrieve the user record
     conn = ''
     try: 
-        conn = sqlite3.connect('feeds.db')
-        c = conn.cursor()
-        c.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        print(c.fetchall())
+        conn = sqlite3.connect('./feeds.db')
     except Exception as e:
         print(e)
     c = conn.cursor()

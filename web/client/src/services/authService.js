@@ -1,14 +1,12 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000'
-
 class AuthService {
 
     async register(userInfo) {
         try {
 
             await axios.post(
-                `${API_URL}/register`,
+                `/register`,
                 userInfo,
             );
             return;
@@ -22,7 +20,7 @@ class AuthService {
         try {
 
             await axios.post(
-                `${API_URL}/login`,
+                `/login`,
                 {
                     email,
                     password
@@ -38,7 +36,7 @@ class AuthService {
         try {
 
             await axios.get(
-                `${API_URL}/verifyUser`,
+                `/verifyUser`,
             );
             return true;
 
@@ -51,7 +49,7 @@ class AuthService {
         try {
 
             await axios.post(
-                `${API_URL}/logout`
+                `/logout`
             );
             return;
 

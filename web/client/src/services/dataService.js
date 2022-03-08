@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';
-
 class DataService {
 
     // Get all words 
@@ -9,7 +7,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/getWords`
+                `/getWords`
             );
             return response.data;
 
@@ -23,7 +21,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/getFeeds`,
+                `/getFeeds`,
                 {
                     params: {
                         page,
@@ -44,7 +42,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/getLikedFeeds`
+                `/getLikedFeeds`
             );
             return response.data;
 
@@ -58,7 +56,7 @@ class DataService {
         try {
 
             const response = await axios.post(
-                `${API_URL}/like`,
+                `/like`,
                 { feed_id }
             );
             return;
@@ -73,7 +71,7 @@ class DataService {
         try {
 
             const response = await axios.post(
-                `${API_URL}/dislike`,
+                `/dislike`,
                 { feed_id }
             );
             return;
@@ -88,7 +86,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/recommend/corex`,
+                `/recommend/corex`,
                 {
                     params: {
                         page
@@ -107,7 +105,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/recommend/tfidf`,
+                `/recommend/tfidf`,
                 {
                     params: {
                         page
@@ -126,7 +124,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/getUserWords`
+                `/getUserWords`
             );
             return response.data;
 
@@ -140,7 +138,7 @@ class DataService {
         try {
 
             const response = await axios.post(
-                `${API_URL}/updateWords`,
+                `/updateWords`,
                 { words }
             )
 
@@ -154,7 +152,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/parseFeed/${feedID}`
+                `/parseFeed/${feedID}`
             );
 
             return response.data;
@@ -169,7 +167,7 @@ class DataService {
         try {
 
             const response = await axios.get(
-                `${API_URL}/getSimilarFeeds/${feedID}`
+                `/getSimilarFeeds/${feedID}`
             );
 
             return response.data;

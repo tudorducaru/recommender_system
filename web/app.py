@@ -33,7 +33,7 @@ jwt = JWTManager(app)
 conn = sqlite3.connect(os.path.abspath('./') + '/feeds.db')
 c = conn.cursor()
 
-c.execute('SELECT * FROM users WHERE email = ?', (email,))
+c.execute('SELECT * FROM users WHERE email = ?', ('tducaru@gmail.com',))
 rows = c.fetchall()
 print(rows[0])
 

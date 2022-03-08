@@ -97,7 +97,11 @@ def login():
         return 'Please send all required information for registration!', 400
 
     # Retrieve the user record
-    conn = sqlite3.connect('./../ml/feeds.db')
+    conn = ''
+    try: 
+        conn = sqlite3.connect('./../ml/feeds.db')
+    except Exception as e:
+        print(e)
     c = conn.cursor()
 
     c.execute('SELECT * FROM users WHERE email = ?', (email,))

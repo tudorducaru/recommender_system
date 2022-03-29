@@ -1,4 +1,8 @@
 feeds_dev.db
 stopwords.ipynb
-# web/feeds.db
+
+# Virtual env
 web/Lib
+web/Scripts
+web/pyvenv.cfg
+web/__pycache__

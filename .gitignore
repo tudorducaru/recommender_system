@@ -2,3 +2,4 @@ feeds_dev.db
 stopwords.ipynb
 
 env/
+web/__pycache__

@@ -64,6 +64,8 @@ npm install
 npm run start
 ```
 
+The website will open at the /build route. Navigate to the root (/) to access the app.
+
 ### Loading the Chrome Extension
 
 In the **main.js** file, change the URL of the website to match the host you are running the server on (probably localhost:*port-no*). The host also needs to be added to the permissions in **manifest.json**.

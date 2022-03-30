@@ -10,7 +10,7 @@
 const verifyUser = async () => {
 
     try {
-        await axios.get('https://feedsupply.herokuapp.com/verifyUser',
+        await axios.get('http://intermediate.asuscomm.com:5000/verifyUser',
             {
                 withCredentials: true
             });
@@ -47,7 +47,7 @@ $(document).ready(async () => {
 
                         // Get csrf cookie
                         chrome.cookies.get({
-                            url: 'https://feedsupply.herokuapp.com',
+                            url: 'http://intermediate.asuscomm.com:5000',
                             name: 'csrf_access_token'
                         }, async csrf_cookie => {
 
@@ -55,7 +55,7 @@ $(document).ready(async () => {
 
                                 // Add the feed to the database
                                 await axios.post(
-                                    'https://feedsupply.herokuapp.com/addLikedFeed',
+                                    'http://intermediate.asuscomm.com:5000/addLikedFeed',
                                     {
                                         feed_url: response.feed_url
                                     },

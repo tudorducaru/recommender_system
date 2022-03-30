@@ -3,24 +3,26 @@
     "name": "FeedSupply Assistant",
     "description": "Quickly add feeds to your Liked Feeds on FeedSupply",
     "version": "1.0",
-    "content_security_policy": "script-src 'self' https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js https://code.jquery.com/jquery-3.6.0.min.js; object-src 'self'",
     "icons": {
         "128": "images/logo_black_128.png"
     },
-    "browser_action": {
+    "action": {
         "default_icon": "images/logo_black_19.png",
         "default_popup": "popup.html"
     },
     "permissions": [
         "activeTab",
-        "cookies",
+        "cookies"        
+    ],
+    "host_permissions": [
         "http://localhost:5000/*",
-        "https://feedsupply.herokuapp.com/*"
+        "https://feedsupply.herokuapp.com/*",
+        "http://intermediate.asuscomm.com:5000/*"
     ],
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["jquery.js", "feed_finder.js"]
+            "js": ["axios.js", "bootstrap.js", "jquery.js", "feed_finder.js"]
         }
     ]
 }

@@ -17,7 +17,7 @@
     "host_permissions": [
         "http://localhost:5000/*",
         "https://feedsupply.herokuapp.com/*",
-        "http://intermediate.asuscomm.com:5000/*"
+        "https://tudorducaru99.pythonanywhere.com/*"
     ],
     "content_scripts": [
         {

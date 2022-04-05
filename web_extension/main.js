@@ -10,7 +10,7 @@
 const verifyUser = async () => {
 
     try {
-        await axios.get('http://intermediate.asuscomm.com:5000/verifyUser',
+        await axios.get('https://tudorducaru99.pythonanywhere.com/verifyUser',
             {
                 withCredentials: true
             });
@@ -47,7 +47,7 @@ $(document).ready(async () => {
 
                         // Get csrf cookie
                         chrome.cookies.get({
-                            url: 'http://intermediate.asuscomm.com:5000',
+                            url: 'https://tudorducaru99.pythonanywhere.com',
                             name: 'csrf_access_token'
                         }, async csrf_cookie => {
 
@@ -55,7 +55,7 @@ $(document).ready(async () => {
 
                                 // Add the feed to the database
                                 await axios.post(
-                                    'http://intermediate.asuscomm.com:5000/addLikedFeed',
+                                    'https://tudorducaru99.pythonanywhere.com/addLikedFeed',
                                     {
                                         feed_url: response.feed_url
                                     },

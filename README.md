@@ -76,5 +76,10 @@ Then, go to the *Manage Extensions* (chrome://extensions/) page on Chrome, activ
 
 This project represents an extension to David Ferreira's Third Year Project, FeedMe. FeedMe has been a valuable starting point for this project, providing inspiration for parts of the system, such as how to collect data as well as feature extraction.
 
+## Deployment
+
+The system has been deployed and is available at http://tudorducaru99.pythonanywhere.com/.
+The Chrome Extension can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/feedsupply-assistant/lhmjggdmmikaoeplnfhbbbalcdclcfhb).
+
 
 

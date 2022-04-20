@@ -15,6 +15,7 @@ import DataService from './services/dataService';
 import LikedFeeds from './pages/likedFeeds/likedFeeds';
 import FeedPage from './pages/feedPage/feedPage';
 import About from './pages/about/about';
+import ExtensionInfo from './pages/extensionInfo/extensionInfo';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
             <Route path='/' element={<RequireAuth><Homepage /></RequireAuth>} />
             <Route path='/explore' element={<RequireAuth><Explore /></RequireAuth>} />
             <Route path='/settings' element={<RequireAuth><Settings /></RequireAuth>} />
+            <Route path='/extension' element={<RequireAuth><ExtensionInfo /></RequireAuth>}/>
             <Route path='/about' element={<RequireAuth><About /></RequireAuth>}/>
             <Route path='/likedFeeds' element={<RequireAuth><LikedFeeds /></RequireAuth>} />
             <Route path='/feed/:feedID' element={<RequireAuth><FeedPage /></RequireAuth>} />

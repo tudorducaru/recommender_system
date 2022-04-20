@@ -79,6 +79,14 @@ const Sidebar = () => {
                         </Col>
                     </Row>
 
+                    <Row className={'sidebar-link ' + (location === '/extension' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/extension'>
+                                Chrome Extension
+                            </Link>
+                        </Col>
+                    </Row>
+
                     <Row className={'sidebar-link ' + (location === '/about' ? 'selected' : '')}>
                         <Col>
                             <Link to='/about'>

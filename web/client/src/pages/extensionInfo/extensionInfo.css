@@ -1,0 +1,13 @@
+.extension-info-container a {
+    color: #EBEBEB;
+}
+
+.extension-info-container a:hover {
+    opacity: 0.7;
+}
+
+.extension-info-container img {
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+}

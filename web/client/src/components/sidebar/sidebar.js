@@ -78,6 +78,14 @@ const Sidebar = () => {
                             </Link>
                         </Col>
                     </Row>
+
+                    <Row className={'sidebar-link ' + (location === '/about' ? 'selected' : '')}>
+                        <Col>
+                            <Link to='/about'>
+                                About
+                            </Link>
+                        </Col>
+                    </Row>
                 </Row>
 
                 <Row></Row>

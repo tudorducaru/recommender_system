@@ -396,7 +396,11 @@ def recommendCorex():
     # Average feature vectors of liked feeds
     for feed_url in liked_feeds_url:
         feed_index = next((i for (i, element) in enumerate(feeds) if element['url'] == feed_url), 0)
-        user_profile += labels[feed_index]
+
+        feed_v = np.zeros(20)
+        feed_v[labels[feed_index]] = 1
+
+        user_profile += feed_v
 
     # Get the topic associated with each of the words
     for word in user_words:
@@ -405,7 +409,9 @@ def recommendCorex():
         word_index = list(words).index(word)
 
         # Use the topic associated with the word
-        user_profile += word_clusters[word_index]
+        word_v = np.zeros(20)
+        word_v[word_clusters[word_index]] = 1
+        user_profile += word_v
 
     user_profile /= (len(liked_feeds_url) + len(user_words)) if (len(liked_feeds_url) + len(user_words)) > 0 else 1
 

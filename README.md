@@ -22,7 +22,7 @@ The **crawler.ipynb** file contains a web crawler that was used in order to coll
 
 ### Feature Extraction
 
-The **umap.ipynb** represents the core ML script. It processes the data collected by the crawler and generates features for the feeds. Specifically, the body of text of each feed is converted into TF-IDF values.
+The **recommender.ipynb** represents the core ML script. It processes the data collected by the crawler and generates features for the feeds. Specifically, the body of text of each feed is converted into TF-IDF values.
 
 ### Making Recommendations
 

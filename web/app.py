@@ -427,7 +427,7 @@ def recommendCorex():
     recommended_feeds = [feeds[i] for i in closest_feeds_index]
     recommended_feeds = [feed for feed in recommended_feeds if feed['url'] not in liked_feeds_url]
 
-    return jsonify(recommended_feeds)
+    return jsonify(recommended_feeds[starting:ending])
 
 
 # Recommend feeds based on tf-idf route

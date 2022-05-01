@@ -424,7 +424,8 @@ def recommendCorex():
     ending = limit * (pageNumber + 1)
 
     closest_feeds_index = np.argsort(distances_matrix[0])
-    recommended_feeds = [feeds[i] for i in closest_feeds_index[starting:ending]]
+    recommended_feeds = [feeds[i] for i in closest_feeds_index]
+    recommended_feeds = [feed for feed in recommended_feeds if feed['url'] not in liked_feeds_url]
 
     return jsonify(recommended_feeds)
 
@@ -505,9 +506,10 @@ def recommendTFIDF():
     print(starting, ending)
 
     closest_feeds_index = np.argsort(distances_matrix[0])
-    recommended_feeds = [feeds[i] for i in closest_feeds_index[starting:ending]]
+    recommended_feeds = [feeds[i] for i in closest_feeds_index]
+    recommended_feeds = [feed for feed in recommended_feeds if feed['url'] not in liked_feeds_url]
 
-    return jsonify(recommended_feeds)
+    return jsonify(recommended_feeds[starting:ending])
 
 
 # Get the words selected by the user

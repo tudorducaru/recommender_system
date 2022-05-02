@@ -76,6 +76,8 @@ In the root folder of the project, run: `pip install -r requirements.txt`
 
 ### Starting the Server
 
+In the **app.py** file, change the value of the secret key used to sign JWTs.
+
 Within the **web** folder, run a Flask development server:
 ```
 set FLASK_ENV=development

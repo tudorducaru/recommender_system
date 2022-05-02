@@ -21,7 +21,7 @@ app = Flask(__name__, static_folder='client/build', static_url_path='/build')
 CORS(app, supports_credentials=True)
 
 # Set up JWT
-app.config['JWT_SECRET_KEY'] = 'e3ab3f6d051deadc143e3c04a2a882e3'
+app.config['JWT_SECRET_KEY'] = '' # UPDATE THIS
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_SESSION_COOKIE'] = False

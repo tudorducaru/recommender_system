@@ -1,5 +1,6 @@
 feeds_dev.db
 stopwords.ipynb
+web/feeds.db
 
 env/
 web/__pycache__

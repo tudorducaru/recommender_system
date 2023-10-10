@@ -28,7 +28,7 @@ jwt = JWTManager(app)
 
 # Set up paths
 db_path = 'feeds.db'
-ml_path = '../ml/'
+ml_path = './ml_files/'
 
 # Registration route
 @app.route('/register', methods=['POST'])

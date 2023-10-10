@@ -19,22 +19,16 @@ app = Flask(__name__, static_folder='client/build', static_url_path='/build')
 CORS(app, supports_credentials=True)
 
 # Set up JWT
-app.config['JWT_SECRET_KEY'] = '' # UPDATE THIS
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY') # UPDATE THIS
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_SESSION_COOKIE'] = False
 app.config['JWT_COOKIE_SECURE'] = True
 jwt = JWTManager(app)
 
-# Set up paths depending on environment
-db_path = ''
-ml_path = ''
-if os.environ.get('FLASK_ENV') == 'development':
-    db_path = 'feeds.db'
-    ml_path = '../ml/'
-else:
-    db_path = 'web/feeds.db'
-    ml_path = 'ml/'
+# Set up paths
+db_path = 'feeds.db'
+ml_path = '../ml/'
 
 # Registration route
 @app.route('/register', methods=['POST'])

@@ -10,8 +10,6 @@ import scipy
 import requests
 from bs4 import BeautifulSoup
 import feedparser
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 import os
 
 # Initialize Flask app
@@ -814,8 +812,3 @@ def getSimilarFeeds(feedID):
 @app.route('/<path:path>')
 def catch_all(path):
     return app.send_static_file("index.html")
-
-
-
-if __name__ == "__main__":
-    app.run()

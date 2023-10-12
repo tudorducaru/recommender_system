@@ -19,7 +19,7 @@ app = Flask(__name__, static_folder='client/build', static_url_path='/build')
 CORS(app, supports_credentials=True)
 
 # Set up JWT
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY') # UPDATE THIS
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_SESSION_COOKIE'] = False
@@ -71,11 +71,11 @@ def register():
         for row in c.fetchall():
             c.execute('INSERT INTO users_words VALUES (?, ?)', (user_id, row[0]))
 
-        conn.commit()
-        conn.close()
-
         # Generate JWT
         jwt_token = create_access_token(identity=user_id)
+
+        # Commit the insertion
+        conn.commit()
         
         # Set the JWT in a cookie
         resp = jsonify({})
@@ -85,6 +85,11 @@ def register():
     except Exception as e:
         print(e)
         return 'Error inserting user in the database', 500
+    
+    finally:
+
+        # close the connection
+        conn.close()
 
 # Login route
 @app.route('/login', methods=['POST'])

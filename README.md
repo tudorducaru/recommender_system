@@ -58,6 +58,14 @@ To recommend users feeds they may like, a user profile is constructed by averagi
 
 These instructions concern the web interface of this project on a Windows system. The ML files are regular Jupyter files that can be ran by simply running the desired cell (as long as all dependencies are installed).
 
+### cd Into Web Directory
+
+All files related to the web app are placed in the **web/** folder: `cd web`. Further installation instructions assume **web/** as the working directory.
+
+### Copy the Database
+
+Copy the **feeds.db** sqlite database into the working directory.
+
 ### Virtual Environment
 
 Create a virtual environment within which to run the project: `python -m venv env`
@@ -76,23 +84,21 @@ In the root folder of the project, run: `pip install -r requirements.txt`
 
 ### Starting the Server
 
-In the **app.py** file, change the value of the secret key used to sign JWTs.
+Set the secret key used to sign JWT tokens as an environment variable: `set JWT_SECRET_KEY=abcd`
 
-Within the **web** folder, run a Flask development server:
+Start a flask development server.
+
 ```
-set FLASK_ENV=development
-flask run
+flask run --debug
 ```
 
 ### Starting the React Client
 
-Within the **client** folder, install Node.js packages and then start the React dev server:
+cd into the **client/** folder, install Node.js packages and then start the React dev server:
 ```
 npm install
 npm run start
 ```
-
-The website will open at the /build route. Navigate to the root (/) to access the app.
 
 ### Loading the Chrome Extension
 

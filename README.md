@@ -44,8 +44,10 @@ To recommend users feeds they may like, a user profile is constructed by averagi
 ### web Folder
 
 - **app.py**: Flask API
-- **feeds.db**: the database of the project
+- **gunicorn_config.py**: gunicorn configuration file (production deployment)
+- **requirements.txt**: requirements for running the flask app
 - **client/**: code of the React front-end client
+- **ml_files/**: outputs of the ml algorithm (used to make the recommendations)
 
 ### web_extension Folder
 

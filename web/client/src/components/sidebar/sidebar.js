@@ -87,13 +87,13 @@ const Sidebar = () => {
                         </Col>
                     </Row>
 
-                    <Row className={'sidebar-link ' + (location === '/settings' ? 'selected' : '')}>
+                    {/* <Row className={'sidebar-link ' + (location === '/settings' ? 'selected' : '')}>
                         <Col>
                             <Link to='/settings'>
                                 Settings
                             </Link>
                         </Col>
-                    </Row>
+                    </Row> */}
 
                     <Row className={'sidebar-link ' + (location === '/extension' ? 'selected' : '')}>
                         <Col>

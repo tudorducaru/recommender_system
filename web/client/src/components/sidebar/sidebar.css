@@ -87,6 +87,21 @@
     background-color: #402826;
 }
 
+.sidebar-link .logout-btn {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.sidebar-link .logout-btn:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: rgb(187, 187, 187) !important;
+}
+
+.sidebar-link .logout-btn:focus {
+    box-shadow: none !important;
+}
+
 @media only screen and (min-width: 992px) {
     .hamburger-container {
         background-color: transparent;

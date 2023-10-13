@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './sidebar.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import { AiOutlineClose } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 import logo from '../../logo.png';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/authContext';
+import AuthService from '../../services/authService';
 
 const Sidebar = () => {
 
@@ -19,6 +22,19 @@ const Sidebar = () => {
 
     // Access navigation
     const navigate = useNavigate();
+
+    // Access authentication context
+    const authContext = useContext(AuthContext);
+
+    // Listener for the logout button
+    const handleLogout = () => {
+
+        // Make a request to log user out
+        AuthService.logout()
+            .then(() => authContext.logoutUser())
+            .catch(errorMessage => console.log(errorMessage));
+
+    }
 
     return (
         <div className={'sidebar-container ' + (show ? 'show' : '')}>
@@ -92,6 +108,14 @@ const Sidebar = () => {
                             <Link to='/about'>
                                 About
                             </Link>
+                        </Col>
+                    </Row>
+
+                    <Row className='sidebar-link'>
+                        <Col>
+                            <Button className='logout-btn' onClick={handleLogout}>
+                                Logout
+                            </Button>
                         </Col>
                     </Row>
                 </Row>

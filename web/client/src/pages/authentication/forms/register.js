@@ -85,7 +85,7 @@ const UserInfoForm = props => {
                     </Form.Group>
 
                     <Button className='custom-btn mt-5' variant="primary" type="submit" disabled={isSubmitting}>
-                        Next Step
+                        Confirm
                     </Button>
                 </Form>
             )}
@@ -123,7 +123,8 @@ const RegistrationForm = () => {
         });
 
         setServerError();
-        setShowWordSelection(true);
+
+        handleSubmit();
     }
 
     const handleWordClick = (word) => {

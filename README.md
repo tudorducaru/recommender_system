@@ -84,9 +84,11 @@ Install the requirements of the web app. NOTE: **requirements.txt** contains the
 
 In the root folder of the project, run: `pip install -r requirements.txt`
 
-### Starting the Server
+### Add Environment Variables
 
-Set the secret key used to sign JWT tokens as an environment variable: `set JWT_SECRET_KEY=abcd`
+Add a `.env` file (in the `web/` directory) and add the `JWT_SECRET_KEY` environment variable.
+
+### Starting the Server
 
 Start a flask development server.
 

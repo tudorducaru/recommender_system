@@ -11,12 +11,16 @@ import requests
 from bs4 import BeautifulSoup
 import feedparser
 import os
+from dotenv import load_dotenv
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='client/build', static_url_path='/build')
 
 # Configure CORS
 CORS(app, supports_credentials=True)
+
+# Load environment variables
+load_dotenv()
 
 # Set up JWT
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')

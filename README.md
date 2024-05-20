@@ -98,10 +98,10 @@ flask run --debug
 
 ### Starting the React Client
 
-cd into the **client/** folder, install Node.js packages and then start the React dev server:
+cd into the **client/** folder, install Node.js packages and then start the Vite dev server:
 ```
 npm install
-npm run start
+npm run dev
 ```
 
 ### Loading the Chrome Extension

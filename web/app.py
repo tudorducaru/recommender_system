@@ -14,7 +14,7 @@ import os
 from dotenv import load_dotenv
 
 # Initialize Flask app
-app = Flask(__name__, static_folder='client/build', static_url_path='/build')
+app = Flask(__name__, static_folder='client/dist', static_url_path='/')
 
 # Configure CORS
 CORS(app, supports_credentials=True)
@@ -814,4 +814,5 @@ def getSimilarFeeds(feedID):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
+    print('hatz')
     return app.send_static_file("index.html")

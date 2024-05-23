@@ -110,6 +110,30 @@ In the **main.js** file, change the URL of the website to match the host you are
 
 Then, go to the *Manage Extensions* (chrome://extensions/) page on Chrome, activate Developer mode by clicking the switch in the top-right, click on the *Load unpacked* button and load the entire **web_extension** folder.
 
+## Running with Docker
+
+These instructions assume `web/` as the working directory and are only concerned with the interface, without the Chrome extension.
+
+### Build the image
+
+In the root of the project, run:
+
+```bash
+docker build -t feedsupply .
+```
+
+### Run the image
+
+To run correctly, the application needs the `JWT_SECRET_KEY` environment variables:
+
+When running the Docker container, environment variables can be passed using the `-e` flag, e.g. `-e JWT_SECRET_KEY=tudorboss`. Alternatively, you can pass an environment variables file using the `--env-file` file flag.
+
+For example, to run the image using the dev environment variables (`.env`), run:
+
+```bash
+docker run --name missionx --env-file .env -d --rm -p 4000:5000 feedsupply
+```
+
 ## Acknowledgements
 
 This project represents an extension to David Ferreira's Third Year Project, FeedMe. FeedMe has been a valuable starting point for this project, providing inspiration for parts of the system, such as how to collect data as well as feature extraction.

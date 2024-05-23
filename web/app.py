@@ -35,7 +35,7 @@ db_path = 'feeds.db'
 ml_path = './ml_files/'
 
 # Registration route
-@app.route('/register', methods=['POST'])
+@app.route('/api/register', methods=['POST'])
 def register():
 
     # Get the data from the request body
@@ -96,7 +96,7 @@ def register():
         conn.close()
 
 # Login route
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
 
     # Get the data from the request body
@@ -135,7 +135,7 @@ def login():
             return 'Incorrect password', 400
 
 # Logout route
-@app.route('/logout', methods=['POST'])
+@app.route('/api/logout', methods=['POST'])
 @jwt_required()
 def logout():
     response = jsonify({})
@@ -143,13 +143,13 @@ def logout():
     return response
 
 # Route that verifies user
-@app.route('/verifyUser')
+@app.route('/api/verifyUser')
 @jwt_required()
 def verifyUser():
     return jsonify({})
 
 # Get words route
-@app.route('/getWords')
+@app.route('/api/getWords')
 def getWords():
 
     # Retrieve all words from the database
@@ -173,7 +173,7 @@ def getWords():
 
 
 # Get feeds route
-@app.route('/getFeeds')
+@app.route('/api/getFeeds')
 @jwt_required()
 def getFeeds():
 
@@ -207,7 +207,7 @@ def getFeeds():
 
 
 # Like feed route
-@app.route('/like', methods=['POST'])
+@app.route('/api/like', methods=['POST'])
 @jwt_required()
 def like():
 
@@ -243,7 +243,7 @@ def like():
 
 
 # Dislike feed route
-@app.route('/dislike', methods=['POST'])
+@app.route('/api/dislike', methods=['POST'])
 @jwt_required()
 def dislike():
 
@@ -279,7 +279,7 @@ def dislike():
 
 
 # Get user's liked feeds
-@app.route('/getLikedFeeds')
+@app.route('/api/getLikedFeeds')
 @jwt_required()
 def getLikedFeeds():
 
@@ -319,7 +319,7 @@ def getLikedFeeds():
 
 
 # Recommend feeds based on corex route
-@app.route('/recommend/corex')
+@app.route('/api/recommend/corex')
 @jwt_required()
 def recommendCorex():
 
@@ -432,7 +432,7 @@ def recommendCorex():
 
 
 # Recommend feeds based on tf-idf route
-@app.route('/recommend/tfidf')
+@app.route('/api/recommend/tfidf')
 @jwt_required()
 def recommendTFIDF():
 
@@ -514,7 +514,7 @@ def recommendTFIDF():
 
 
 # Get the words selected by the user
-@app.route('/getUserWords')
+@app.route('/api/getUserWords')
 @jwt_required()
 def getUserWords():
 
@@ -549,7 +549,7 @@ def getUserWords():
 
 
 # Update user's words in the database
-@app.route('/updateWords', methods=['POST'])
+@app.route('/api/updateWords', methods=['POST'])
 @jwt_required()
 def updateWords():
 
@@ -586,7 +586,7 @@ def updateWords():
 # Add as new feed from the chrome extension
 # Checks if the feed exists in the database and, if not,
 # generates features for it and then saves it
-@app.route('/addLikedFeed', methods=['POST'])
+@app.route('/api/addLikedFeed', methods=['POST'])
 @jwt_required()
 def addLikedFeed():
 
@@ -691,7 +691,7 @@ def addLikedFeed():
     
 
 # Parse a feed based on its id
-@app.route('/parseFeed/<feedID>')
+@app.route('/api/parseFeed/<feedID>')
 @jwt_required()
 def parseFeed(feedID):
 
@@ -754,7 +754,7 @@ def parseFeed(feedID):
 
 
 # Return similar feeds for a given feed ID
-@app.route('/getSimilarFeeds/<feedID>')
+@app.route('/api/getSimilarFeeds/<feedID>')
 @jwt_required()
 def getSimilarFeeds(feedID):
 

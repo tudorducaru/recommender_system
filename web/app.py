@@ -814,5 +814,4 @@ def getSimilarFeeds(feedID):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    print('hatz')
     return app.send_static_file("index.html")

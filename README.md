@@ -131,7 +131,7 @@ When running the Docker container, environment variables can be passed using the
 For example, to run the image using the dev environment variables (`.env`), run:
 
 ```bash
-docker run --name missionx --env-file .env -d --rm -p 4000:5000 feedsupply
+docker run --name feedsupply --env-file .env -d --rm -p 4000:5000 feedsupply
 ```
 
 ## Acknowledgements
@@ -140,7 +140,7 @@ This project represents an extension to David Ferreira's Third Year Project, Fee
 
 ## Deployment
 
-The system has been deployed and is available at http://tudorducaru99.pythonanywhere.com/.
+The system has been deployed and is available at https://feedsupply.tudorducaru.com/.
 The Chrome Extension can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/feedsupply-assistant/lhmjggdmmikaoeplnfhbbbalcdclcfhb).
 
 

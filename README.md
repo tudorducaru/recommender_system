@@ -140,7 +140,7 @@ This project represents an extension to David Ferreira's Third Year Project, Fee
 
 ## Deployment
 
-The system has been deployed and is available at http://tudorducaru99.pythonanywhere.com/.
+The system has been deployed and is available at https://feedsupply.tudorducaru.com/.
 The Chrome Extension can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/feedsupply-assistant/lhmjggdmmikaoeplnfhbbbalcdclcfhb).
 
 
